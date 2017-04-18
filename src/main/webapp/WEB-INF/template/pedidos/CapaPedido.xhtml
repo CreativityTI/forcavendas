@@ -5,66 +5,67 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:panelGrid columns="6" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo, rotulo, campo">
-    <p:outputLabel value="Número" />
+        <p:outputLabel value="Número" />
         <h:outputText value="12345" />
-		
-		    <p:outputLabel value="Data de criação" />
-       <h:outputText value="08/06/2013" />
-		
-			    <p:outputLabel value="Vencimento" />
+
+        <p:outputLabel value="Data de criação" />
+        <h:outputText value="08/06/2013" />
+
+        <p:outputLabel value="Vencimento" />
         <h:outputText value="30/04/2018" />
-		
-		       <p:outputLabel value="Operação" for="operacao"/>
-        <p:selectOneMenu id="operacao">
+
+        <p:outputLabel value="Operação" for="operacao"/>
+        <p:selectOneMenu id="operacao" value="#{cadastroPedidoBean.pedido.operacao}">
             <f:selectItem itemLabel="Selecione" />
-            <f:selectItem itemLabel="Venda Normal" />
+            <f:selectItems value="${cadastroPedidoBean.operacoes}" itemLabel="#{operacao.descricao}" var="operacao" 
+                           itemValue="#{operacao}" />
         </p:selectOneMenu>
 
-		        <p:outputLabel value="Cliente" for="cliente"/>
+        <p:outputLabel value="Cliente" for="cliente"/>
         <p:autoComplete id="cliente" size="40" dropdown="true" />
 
         <p:outputLabel value="Desconto" style="font-weight: bold" for="desconto"/>
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="desconto" />
-		
-		        <p:outputLabel value="CFOP" for="cfop"/>
+
+        <p:outputLabel value="CFOP" for="cfop"/>
         <p:selectOneMenu id="cfop">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItem itemLabel="5102-00" />
         </p:selectOneMenu>
-        
-		
+
+
         <p:outputLabel value="Propriedade" for="propriedade"/>
         <p:selectOneMenu id="propriedade">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItem itemLabel="Sitio São João" />
         </p:selectOneMenu>
-		
-		
+
+
         <p:outputLabel value="Subtotal" style="font-weight: bold"/>
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="subtotal" />
-        
-                <p:outputLabel value="Ciclo" for="ciclo"/>
+
+        <p:outputLabel value="Ciclo" for="ciclo"/>
         <p:selectOneMenu id="ciclo">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItem itemLabel="Safra 2017/2018" />
         </p:selectOneMenu>
-      
-                
-                       <p:outputLabel value="Consultor" for="consultor"/>
+
+
+        <p:outputLabel value="Consultor" for="consultor"/>
         <p:selectOneMenu id="consultor">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItem itemLabel="João" />
         </p:selectOneMenu>
-                       
-                       
+
+
         <p:outputLabel value="Total do pedido" style="font-weight: bold; font-size: 1.1em"/>
         <h:outputText value="R$ 0,00" style="font-weight: bold; font-size: 1.1em" id="totalPedido" />
-        
-        	    <p:outputLabel value="Condição de Pagamento" />
+
+        <p:outputLabel value="Condição de Pagamento" />
         <h:outputText value="Venda a Prazo" />
-        
-        
-        
+
+
+
 
     </p:panelGrid>
 

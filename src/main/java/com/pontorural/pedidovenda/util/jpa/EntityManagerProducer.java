@@ -20,7 +20,7 @@ import javax.persistence.Persistence;
 @ApplicationScoped
 public class EntityManagerProducer {
 
-	private EntityManagerFactory factory;
+	private  EntityManagerFactory factory;
 	
 	public EntityManagerProducer() {
 		factory = Persistence.createEntityManagerFactory("PedidoPU");
