@@ -5,6 +5,7 @@
  */
 package com.pontorural.pedidovenda.util.jsf;
 
+import com.pontorural.pedidovenda.service.NegocioException;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -16,14 +17,14 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+
 /**
  *
  * @author Creativity
  */
-public class JsfExceptionHandler extends ExceptionHandlerWrapper{
+public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 
-
-private final ExceptionHandler wrapped;
+    private final ExceptionHandler wrapped;
 	
 	public JsfExceptionHandler(ExceptionHandler wrapped) {
 		this.wrapped = wrapped;
@@ -43,17 +44,39 @@ private final ExceptionHandler wrapped;
 			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 			
 			Throwable exception = context.getException();
+			NegocioException negocioException = getNegocioException(exception);
+			
+			boolean handled = false;
 			
 			try {
 				if (exception instanceof ViewExpiredException) {
+					handled = true;
 					redirect("/");
+				} else if (negocioException != null) {
+					handled = true;
+					FacesUtil.addErrorMessage(negocioException.getMessage());
+				} else {
+					handled = true;
+					redirect("/Erro.xhtml");
 				}
 			} finally {
-				events.remove();
+				if (handled) {
+					events.remove();
+				}
 			}
 		}
 		
 		getWrapped().handle();
+	}
+	
+	private NegocioException getNegocioException(Throwable exception) {
+		if (exception instanceof NegocioException) {
+			return (NegocioException) exception;
+		} else if (exception.getCause() != null) {
+			return getNegocioException(exception.getCause());
+		}
+		
+		return null;
 	}
 	
 	private void redirect(String page) {
