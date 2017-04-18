@@ -5,12 +5,15 @@
  */
 package com.pontorural.pedidovenda.controller;
 
+import com.pontorural.pedidovenda.model.Cfop;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Pedido;
+import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,8 +31,12 @@ public class CadastroPedidoBean implements Serializable {
 
     @Inject
     private Operacoes repositoryOperacoes;
-    
+
+    @Inject
+    private Cfops repositoryCfops;
+
     private List<Operacao> operacoes;
+    private List<Cfop> cfops;
 
     public CadastroPedidoBean() {
         limpar();
@@ -41,15 +48,15 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
-        
+
         this.operacoes = this.repositoryOperacoes.todasOperacoes();
+        this.cfops = this.repositoryCfops.todosCFOPS();
 
     }
 
     private void limpar() {
-        
+
         pedido = new Pedido();
-        
 
     }
 
@@ -68,8 +75,14 @@ public class CadastroPedidoBean implements Serializable {
     public void setOperacoes(List<Operacao> operacoes) {
         this.operacoes = operacoes;
     }
-    
-    
+
+    public List<Cfop> getCfops() {
+        return cfops;
+    }
+
+    public void setCfops(List<Cfop> cfops) {
+        this.cfops = cfops;
+    }
     
     
 

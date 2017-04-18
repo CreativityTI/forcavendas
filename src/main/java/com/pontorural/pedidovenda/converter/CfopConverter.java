@@ -5,7 +5,9 @@
  */
 package com.pontorural.pedidovenda.converter;
 
+import com.pontorural.pedidovenda.model.Cfop;
 import com.pontorural.pedidovenda.model.Operacao;
+import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -19,19 +21,19 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author rafael.lima
  */
-@FacesConverter(forClass = Operacao.class)
-public class OperacaoConverter implements Converter {
+@FacesConverter(forClass = Cfop.class)
+public class CfopConverter implements Converter {
 
     @Inject
-    private Operacoes operacoes;
+    private Cfops cfops;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Operacao retorno = null;
+        Cfop retorno = null;
 
         if (StringUtils.isNotEmpty(value)) {
-            Integer codigo = new Integer(value);
-            retorno = operacoes.porId(codigo);
+            String codigo = new String(value);
+            retorno = cfops.porId(codigo);
         }
 
         return retorno;
@@ -40,7 +42,7 @@ public class OperacaoConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return ((Operacao) value).getCodigo().toString();
+            return ((Cfop) value).getCodigo();
         }
 
         return "";

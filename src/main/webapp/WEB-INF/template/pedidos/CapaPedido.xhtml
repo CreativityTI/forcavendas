@@ -28,9 +28,10 @@
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="desconto" />
 
         <p:outputLabel value="CFOP" for="cfop"/>
-        <p:selectOneMenu id="cfop">
+        <p:selectOneMenu id="cfop" value="#{cadastroPedidoBean.pedido.cfop}">
             <f:selectItem itemLabel="Selecione" />
-            <f:selectItem itemLabel="5102-00" />
+            <f:selectItems value="#{cadastroPedidoBean.cfops}" var="cfop"
+                           itemValue="#{cfop}" itemLabel="#{cfop.codigo}"/>
         </p:selectOneMenu>
 
 

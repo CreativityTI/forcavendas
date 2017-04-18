@@ -32,6 +32,10 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "CODI_TOP", referencedColumnName = "CODI_TOP")
     private Operacao operacao;
 
+    @ManyToOne
+    @JoinColumn(name = "CCFO_CFO", referencedColumnName = "CCFO_CFO")
+    private Cfop cfop;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -47,6 +51,17 @@ public class Pedido implements Serializable {
     public void setOperacao(Operacao operacao) {
         this.operacao = operacao;
     }
+
+    public Cfop getCfop() {
+        return cfop;
+    }
+
+    public void setCfop(Cfop cfop) {
+        this.cfop = cfop;
+    }
+    
+    
+    
 
     @Override
     public int hashCode() {
