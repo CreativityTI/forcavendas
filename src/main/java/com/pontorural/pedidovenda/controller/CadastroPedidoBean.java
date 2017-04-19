@@ -10,6 +10,7 @@ import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Pedido;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Operacoes;
+import com.pontorural.pedidovenda.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -28,6 +29,8 @@ public class CadastroPedidoBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Pedido pedido;
+
+    private Operacao operacao;
 
     @Inject
     private Operacoes repositoryOperacoes;
@@ -48,10 +51,19 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
-
         this.operacoes = this.repositoryOperacoes.todasOperacoes();
-        this.cfops = this.repositoryCfops.todosCFOPS();
 
+    }
+
+    public void carregarCfops() {
+
+        cfops = repositoryCfops.todosCFOPSPorOperacao(pedido.getOperacao());
+
+    }
+
+    public void salvar() {
+        System.out.println("Operacao" + pedido.getOperacao().getCodigo());
+        System.out.println("CFOP" + pedido.getCfop().getCodigo());
     }
 
     private void limpar() {
@@ -83,7 +95,13 @@ public class CadastroPedidoBean implements Serializable {
     public void setCfops(List<Cfop> cfops) {
         this.cfops = cfops;
     }
-    
-    
+
+    public Operacao getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(Operacao operacao) {
+        this.operacao = operacao;
+    }
 
 }

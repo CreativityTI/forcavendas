@@ -29,12 +29,14 @@ public class Cfops implements Serializable{
     }
 
     public List<Cfop> todosCFOPS() {
-        return manager.createQuery("from Cfop c where c.operacao = 20 )", Cfop.class).getResultList();
+        return manager.createQuery("from Cfop c where c.operacao = 20", Cfop.class).getResultList();
 
     }
     
+  
+    
      public List<Cfop> todosCFOPSPorOperacao(Operacao operacao) {
-        return manager.createQuery("from Cfop c where c.operacao =: operacao}", Cfop.class).setParameter("operacao", operacao).getResultList();
+        return manager.createQuery("from Cfop where operacao = :operacao", Cfop.class).setParameter("operacao", operacao).getResultList();
 
     }
 }

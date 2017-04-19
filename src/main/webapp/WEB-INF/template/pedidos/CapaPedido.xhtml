@@ -18,7 +18,10 @@
         <p:selectOneMenu id="operacao" value="#{cadastroPedidoBean.pedido.operacao}">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItems value="${cadastroPedidoBean.operacoes}" itemLabel="#{operacao.descricao}" var="operacao" 
-                           itemValue="#{operacao}" />
+                           itemValue="#{operacao}"
+                         />
+              <p:ajax listener="#{cadastroPedidoBean.carregarCfops}"
+                                   update="cfop"/>
         </p:selectOneMenu>
 
         <p:outputLabel value="Cliente" for="cliente"/>
