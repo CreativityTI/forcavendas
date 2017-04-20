@@ -49,9 +49,10 @@
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="subtotal" />
 
         <p:outputLabel value="Ciclo" for="ciclo"/>
-        <p:selectOneMenu id="ciclo">
+        <p:selectOneMenu id="ciclo" value="#{cadastroPedidoBean.pedido.ciclo}">
             <f:selectItem itemLabel="Selecione" />
-            <f:selectItem itemLabel="Safra 2017/2018" />
+            <f:selectItems value="#{cadastroPedidoBean.ciclos}"  var="ciclo" 
+                           itemValue="#{ciclo}" itemLabel="#{ciclo.descricao}"/>
         </p:selectOneMenu>
 
 
@@ -65,9 +66,12 @@
         <p:outputLabel value="Total do pedido" style="font-weight: bold; font-size: 1.1em"/>
         <h:outputText value="R$ 0,00" style="font-weight: bold; font-size: 1.1em" id="totalPedido" />
 
-        <p:outputLabel value="Condição de Pagamento" />
-        <h:outputText value="Venda a Prazo" />
-
+        <p:outputLabel value="Condição de Pagamento" for="condicaoPagamento"/>
+        <p:selectOneMenu id="condicaoPagamento" value="#{cadastroPedidoBean.pedido.condicao}">
+            <f:selectItem itemLabel="Selecione" />
+            <f:selectItems value="#{cadastroPedidoBean.condicoes}" var="condicao"
+                           itemValue="${condicao}"    itemLabel="${condicao.descricao}"/>
+        </p:selectOneMenu>
 
 
 

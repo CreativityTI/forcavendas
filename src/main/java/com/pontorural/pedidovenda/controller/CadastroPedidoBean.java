@@ -6,11 +6,16 @@
 package com.pontorural.pedidovenda.controller;
 
 import com.pontorural.pedidovenda.model.Cfop;
+import com.pontorural.pedidovenda.model.Ciclo;
+import com.pontorural.pedidovenda.model.Condicao;
 import com.pontorural.pedidovenda.model.Operacao;
+import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
 import com.pontorural.pedidovenda.repository.Cfops;
+import com.pontorural.pedidovenda.repository.Ciclos;
+import com.pontorural.pedidovenda.repository.Condicoes;
 import com.pontorural.pedidovenda.repository.Operacoes;
-import com.pontorural.pedidovenda.util.jsf.FacesUtil;
+import com.pontorural.pedidovenda.repository.Parceiros;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -38,8 +43,21 @@ public class CadastroPedidoBean implements Serializable {
     @Inject
     private Cfops repositoryCfops;
 
+    @Inject
+    private Ciclos repositoryCiclos;
+    
+    @Inject
+    private Condicoes repositoryCondicoes;
+    
+    @Inject
+    private Parceiros repositoryParceiros;
+    
+
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
+    private List<Ciclo> ciclos;
+    private List<Condicao> condicoes;
+    private List<Parceiro> parceiros;
 
     public CadastroPedidoBean() {
         limpar();
@@ -52,6 +70,9 @@ public class CadastroPedidoBean implements Serializable {
             limpar();
         }
         this.operacoes = this.repositoryOperacoes.todasOperacoes();
+        this.ciclos = this.repositoryCiclos.todosCiclos();
+        this.condicoes = this.repositoryCondicoes.todasCondicoes();
+        this.parceiros = this.repositoryParceiros.todosParceiros();
 
     }
 
@@ -103,5 +124,23 @@ public class CadastroPedidoBean implements Serializable {
     public void setOperacao(Operacao operacao) {
         this.operacao = operacao;
     }
+
+    public List<Ciclo> getCiclos() {
+        return ciclos;
+    }
+
+    public void setCiclos(List<Ciclo> ciclos) {
+        this.ciclos = ciclos;
+    }
+
+    public List<Condicao> getCondicoes() {
+        return condicoes;
+    }
+
+    public void setCondicoes(List<Condicao> condicoes) {
+        this.condicoes = condicoes;
+    }
+    
+    
 
 }

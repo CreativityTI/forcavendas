@@ -6,6 +6,7 @@
 package com.pontorural.pedidovenda.repository;
 
 import com.pontorural.pedidovenda.model.Cfop;
+import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.model.Operacao;
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.persistence.EntityManager;
  *
  * @author rafael.lima
  */
-public class Cfops implements Serializable{
+public class Ciclos implements Serializable{
     
 
     private static final long serialVersionUID = 1L;
@@ -24,12 +25,13 @@ public class Cfops implements Serializable{
     @Inject
     private EntityManager manager;
 
-    public Cfop porId(String codigo) {
-        return manager.find(Cfop.class, codigo);
+    public Ciclo porId(Integer codigo) {
+        return manager.find(Ciclo.class, codigo);
     }
 
-    public List<Cfop> todosCFOPS() {
-        return manager.createQuery("from Cfop c where c.operacao = 20", Cfop.class).getResultList();
+    public List<Ciclo> todosCiclos() {
+        return manager.createQuery("from Ciclo c where c.situacao = 'A'"
+                + "order by c.descricao desc", Ciclo.class).getResultList();
 
     }
     

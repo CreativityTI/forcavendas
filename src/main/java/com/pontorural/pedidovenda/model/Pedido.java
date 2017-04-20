@@ -36,6 +36,18 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "CCFO_CFO", referencedColumnName = "CCFO_CFO")
     private Cfop cfop;
 
+    @ManyToOne
+    @JoinColumn(name = "CODI_CIC", referencedColumnName = "CODI_CIC")
+    private Ciclo ciclo;
+
+    @ManyToOne
+    @JoinColumn(name = "COND_CON", referencedColumnName = "COND_CON")
+    private Condicao condicao;
+
+    @ManyToOne
+    @JoinColumn(name = "CODI_TRA", referencedColumnName = "CODI_TRA")
+    private Parceiro parceiro;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -58,6 +70,30 @@ public class Pedido implements Serializable {
 
     public void setCfop(Cfop cfop) {
         this.cfop = cfop;
+    }
+
+    public Ciclo getCiclo() {
+        return ciclo;
+    }
+
+    public void setCiclo(Ciclo ciclo) {
+        this.ciclo = ciclo;
+    }
+
+    public Condicao getCondicao() {
+        return condicao;
+    }
+
+    public void setCondicao(Condicao condicao) {
+        this.condicao = condicao;
+    }
+
+    public Parceiro getParceiro() {
+        return parceiro;
+    }
+
+    public void setParceiro(Parceiro parceiro) {
+        this.parceiro = parceiro;
     }
     
     

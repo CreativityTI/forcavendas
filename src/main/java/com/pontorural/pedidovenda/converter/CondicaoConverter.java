@@ -5,9 +5,11 @@
  */
 package com.pontorural.pedidovenda.converter;
 
-import com.pontorural.pedidovenda.model.Cfop;
+import com.pontorural.pedidovenda.model.Ciclo;
+import com.pontorural.pedidovenda.model.Condicao;
 import com.pontorural.pedidovenda.model.Operacao;
-import com.pontorural.pedidovenda.repository.Cfops;
+import com.pontorural.pedidovenda.repository.Ciclos;
+import com.pontorural.pedidovenda.repository.Condicoes;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,19 +23,21 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author rafael.lima
  */
-@FacesConverter(forClass = Cfop.class)
-public class CfopConverter implements Converter {
+@FacesConverter(forClass = Condicao.class)
+public class CondicaoConverter implements Converter {
 
     @Inject
-    private Cfops cfops;
+    private Condicoes condicoes;
+
+    
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Cfop retorno = null;
+        Condicao retorno = null;
 
         if (StringUtils.isNotEmpty(value)) {
-            String codigo = new String(value);
-            retorno = cfops.porId(codigo);
+            Integer codigo = new Integer(value);
+            retorno = condicoes.porId(codigo);
         }
 
         return retorno;
@@ -42,7 +46,7 @@ public class CfopConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return ((Cfop) value).getCodigo();
+            return ((Condicao) value).getCodigo().toString();
         }
 
         return "";
