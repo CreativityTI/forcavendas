@@ -5,9 +5,6 @@
  */
 package com.pontorural.pedidovenda.repository;
 
-import com.pontorural.pedidovenda.model.Cfop;
-import com.pontorural.pedidovenda.model.Ciclo;
-import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import java.io.Serializable;
 import java.util.List;
@@ -18,8 +15,7 @@ import javax.persistence.EntityManager;
  *
  * @author rafael.lima
  */
-public class Parceiros implements Serializable{
-    
+public class Parceiros implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +30,12 @@ public class Parceiros implements Serializable{
         return manager.createQuery("from Parceiro", Parceiro.class).getResultList();
 
     }
-    
-  
+
+    public List<Parceiro> porNome(String nome) {
+        return this.manager.createQuery("from Parceiro "
+                + "where upper(nome) like :nome", Parceiro.class)
+                .setParameter("nome", nome.toUpperCase() + "%")
+                .getResultList();
+    }
+
 }

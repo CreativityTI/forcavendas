@@ -5,8 +5,8 @@
  */
 package com.pontorural.pedidovenda.converter;
 
-import com.pontorural.pedidovenda.model.Parceiro;
-import com.pontorural.pedidovenda.repository.Parceiros;
+import com.pontorural.pedidovenda.model.Propriedade;
+import com.pontorural.pedidovenda.repository.Propriedades;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,21 +19,19 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author rafael.lima
  */
-@FacesConverter(forClass = Parceiro.class)
-public class ParceiroConverter implements Converter {
+@FacesConverter(forClass = Propriedade.class)
+public class PropriedadeConverter implements Converter {
 
     @Inject
-    private Parceiros parceiros;
-
-    
+    private Propriedades propriedades;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Parceiro retorno = null;
+        Propriedade retorno = null;
 
         if (StringUtils.isNotEmpty(value)) {
             Integer codigo = new Integer(value);
-            retorno = parceiros.porId(codigo);
+            retorno = propriedades.porId(codigo);
         }
 
         return retorno;
@@ -42,7 +40,7 @@ public class ParceiroConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return ((Parceiro) value).getCodigo().toString();
+            return ((Propriedade) value).getCodigo().toString();
         }
 
         return "";

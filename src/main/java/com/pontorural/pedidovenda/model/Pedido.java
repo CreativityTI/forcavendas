@@ -6,6 +6,7 @@
 package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,6 +48,13 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CODI_TRA", referencedColumnName = "CODI_TRA")
     private Parceiro parceiro;
+    
+    
+    @Column(name = "DEMI_PED")
+    private LocalDateTime emissao;
+    
+     @Column(name = "VCTO_PED")
+    private LocalDateTime vencimento;
 
     public Integer getCodigo() {
         return codigo;
@@ -94,6 +102,22 @@ public class Pedido implements Serializable {
 
     public void setParceiro(Parceiro parceiro) {
         this.parceiro = parceiro;
+    }
+
+    public LocalDateTime getEmissao() {
+        return emissao;
+    }
+
+    public void setEmissao(LocalDateTime emissao) {
+        this.emissao = emissao;
+    }
+
+    public LocalDateTime getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(LocalDateTime vencimento) {
+        this.vencimento = vencimento;
     }
     
     

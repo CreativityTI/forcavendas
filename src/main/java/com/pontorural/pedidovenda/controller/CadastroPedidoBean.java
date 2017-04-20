@@ -11,11 +11,13 @@ import com.pontorural.pedidovenda.model.Condicao;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
+import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Ciclos;
 import com.pontorural.pedidovenda.repository.Condicoes;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import com.pontorural.pedidovenda.repository.Parceiros;
+import com.pontorural.pedidovenda.repository.Propriedades;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -36,6 +38,8 @@ public class CadastroPedidoBean implements Serializable {
     private Pedido pedido;
 
     private Operacao operacao;
+    
+    private Parceiro parceiro ;
 
     @Inject
     private Operacoes repositoryOperacoes;
@@ -45,19 +49,22 @@ public class CadastroPedidoBean implements Serializable {
 
     @Inject
     private Ciclos repositoryCiclos;
-    
+
     @Inject
     private Condicoes repositoryCondicoes;
-    
+
     @Inject
     private Parceiros repositoryParceiros;
     
+    @Inject
+    private Propriedades repositoryPropriedades;
 
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
     private List<Ciclo> ciclos;
     private List<Condicao> condicoes;
     private List<Parceiro> parceiros;
+    private List<Propriedade> propriedades;
 
     public CadastroPedidoBean() {
         limpar();
@@ -72,8 +79,12 @@ public class CadastroPedidoBean implements Serializable {
         this.operacoes = this.repositoryOperacoes.todasOperacoes();
         this.ciclos = this.repositoryCiclos.todosCiclos();
         this.condicoes = this.repositoryCondicoes.todasCondicoes();
-        this.parceiros = this.repositoryParceiros.todosParceiros();
+      
 
+    }
+
+    public List<Parceiro> completarCliente(String nome) {
+        return this.repositoryParceiros.porNome(nome);
     }
 
     public void carregarCfops() {
@@ -81,6 +92,12 @@ public class CadastroPedidoBean implements Serializable {
         cfops = repositoryCfops.todosCFOPSPorOperacao(pedido.getOperacao());
 
     }
+    
+    public void carregarPropriedades(){
+        propriedades = repositoryPropriedades.todasPropriedadesPorParceiro(parceiro);
+    }
+    
+    
 
     public void salvar() {
         System.out.println("Operacao" + pedido.getOperacao().getCodigo());
@@ -139,6 +156,30 @@ public class CadastroPedidoBean implements Serializable {
 
     public void setCondicoes(List<Condicao> condicoes) {
         this.condicoes = condicoes;
+    }
+
+    public Parceiro getParceiro() {
+        return parceiro;
+    }
+
+    public void setParceiro(Parceiro parceiro) {
+        this.parceiro = parceiro;
+    }
+
+    public List<Parceiro> getParceiros() {
+        return parceiros;
+    }
+
+    public void setParceiros(List<Parceiro> parceiros) {
+        this.parceiros = parceiros;
+    }
+
+    public List<Propriedade> getPropriedades() {
+        return propriedades;
+    }
+
+    public void setPropriedades(List<Propriedade> propriedades) {
+        this.propriedades = propriedades;
     }
     
     

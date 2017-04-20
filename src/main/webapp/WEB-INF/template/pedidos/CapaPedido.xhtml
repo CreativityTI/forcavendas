@@ -6,26 +6,43 @@
 
     <p:panelGrid columns="6" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo, rotulo, campo">
         <p:outputLabel value="Número" />
-        <h:outputText value="12345" />
+        <h:outputText value="#{cadastroPedidoBean.pedido.codigo}" />
 
-        <p:outputLabel value="Data de criação" />
-        <h:outputText value="08/06/2013" />
+        <p:outputLabel value="Data de Emissão" />
+        <h:outputText value="#{cadastroPedidoBean.pedido.emissao}" />
 
-        <p:outputLabel value="Vencimento" />
-        <h:outputText value="30/04/2018" />
+        <p:outputLabel value="Vencimento" for="vencimento" />
+        <p:calendar id="vencimento" size="10" pattern="dd/MM/yyyy" locale="pt_BR"
+                    value="#{cadastroPedidoBean.pedido.vencimento}"/>
 
         <p:outputLabel value="Operação" for="operacao"/>
         <p:selectOneMenu id="operacao" value="#{cadastroPedidoBean.pedido.operacao}">
             <f:selectItem itemLabel="Selecione" />
-            <f:selectItems value="${cadastroPedidoBean.operacoes}" itemLabel="#{operacao.descricao}" var="operacao" 
+            <f:selectItems value="#{cadastroPedidoBean.operacoes}" itemLabel="#{operacao.descricao}" var="operacao" 
                            itemValue="#{operacao}"
-                         />
-              <p:ajax listener="#{cadastroPedidoBean.carregarCfops}"
-                                   update="cfop"/>
+                           />
+            <p:ajax listener="#{cadastroPedidoBean.carregarCfops}"
+                    update="cfop"/>
         </p:selectOneMenu>
 
         <p:outputLabel value="Cliente" for="cliente"/>
-        <p:autoComplete id="cliente" size="40" dropdown="true" />
+        <p:autoComplete id="cliente" size="40" dropdown="true" value="#{cadastroPedidoBean.pedido.parceiro}" 
+                        completeMethod="#{cadastroPedidoBean.completarCliente}" 
+                        var="parceiro" itemLabel="#{parceiro.nome}"
+                        itemValue="#{parceiro}"
+                        forceSelection="true"
+                        minQueryLength="3"
+                        maxResults="5"
+                        >
+            <p:ajax event="itemSelect"  listener="#{cadastroPedidoBean.carregarPropriedades}"
+                    update="propriedade"/>
+
+        </p:autoComplete>
+
+
+
+
+
 
         <p:outputLabel value="Desconto" style="font-weight: bold" for="desconto"/>
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="desconto" />
@@ -41,7 +58,8 @@
         <p:outputLabel value="Propriedade" for="propriedade"/>
         <p:selectOneMenu id="propriedade">
             <f:selectItem itemLabel="Selecione" />
-            <f:selectItem itemLabel="Sitio São João" />
+            <f:selectItems value="#{cadastroPedidoBean.propriedades}" var="propriedade"
+                           itemLabel="#{propriedade.descricao}" itemValue="#{propriedade}"/>
         </p:selectOneMenu>
 
 

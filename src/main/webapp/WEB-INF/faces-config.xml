@@ -9,5 +9,10 @@
             com.pontorural.pedidovenda.util.jsf.JsfExceptionHandlerFactory
         </exception-handler-factory>
     </factory>
+    <application>
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+        </locale-config>
+    </application>
         
-  </faces-config>
+</faces-config>
