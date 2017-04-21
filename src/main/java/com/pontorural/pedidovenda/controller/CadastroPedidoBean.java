@@ -94,7 +94,7 @@ public class CadastroPedidoBean implements Serializable {
     }
     
     public void carregarPropriedades(){
-        propriedades = repositoryPropriedades.todasPropriedadesPorParceiro(parceiro);
+        propriedades = repositoryPropriedades.todasPropriedadesPorParceiro(pedido.getParceiro());
     }
     
     

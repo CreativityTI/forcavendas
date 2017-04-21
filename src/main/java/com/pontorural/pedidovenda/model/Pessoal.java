@@ -14,23 +14,20 @@ import javax.persistence.Table;
 
 /**
  *
- * @author rafael.lima
+ * @author Creativity
  */
 @Entity
-@Table(name = "MUNICIPIO")
-public class Municipio implements Serializable {
+@Table(name = "PESSOAL")
+public class Pessoal implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
-    	private static final long serialVersionUID = 1L;
-
     @Id
-    @Column(name = "CODI_MUN")
+    @Column(name = "CODI_PES")
     private Integer codigo;
-
-    @Column(name = "DESC_MUN")
-    private String descricao;
-
-    @Column(name = "ESTA_MUN")
-    private String estado;
+    
+    @Column(name = "NOME_PES")
+    private String nome;
 
     public Integer getCodigo() {
         return codigo;
@@ -40,26 +37,18 @@ public class Municipio implements Serializable {
         this.codigo = codigo;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.codigo);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.codigo);
         return hash;
     }
 
@@ -74,14 +63,13 @@ public class Municipio implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Municipio other = (Municipio) obj;
+        final Pessoal other = (Pessoal) obj;
         if (!Objects.equals(this.codigo, other.codigo)) {
             return false;
         }
         return true;
     }
-    
-    
-    
 
+    
+    
 }

@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -29,31 +31,37 @@ public class Pedido implements Serializable {
     @Column(name = "PEDI_PED")
     private Integer codigo;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "CODI_TOP", referencedColumnName = "CODI_TOP")
     private Operacao operacao;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "CCFO_CFO", referencedColumnName = "CCFO_CFO")
     private Cfop cfop;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "CODI_CIC", referencedColumnName = "CODI_CIC")
     private Ciclo ciclo;
-
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "COND_CON", referencedColumnName = "COND_CON")
     private Condicao condicao;
-
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "CODI_TRA", referencedColumnName = "CODI_TRA")
     private Parceiro parceiro;
-    
-    
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "PROP_PRO", referencedColumnName = "PROP_PRO")
+    private Propriedade propriedade;
+
     @Column(name = "DEMI_PED")
     private LocalDateTime emissao;
-    
-     @Column(name = "VCTO_PED")
+    @NotNull
+    @Column(name = "VCTO_PED")
     private LocalDateTime vencimento;
 
     public Integer getCodigo() {
@@ -119,9 +127,24 @@ public class Pedido implements Serializable {
     public void setVencimento(LocalDateTime vencimento) {
         this.vencimento = vencimento;
     }
-    
-    
-    
+
+    public Propriedade getPropriedade() {
+        return propriedade;
+    }
+
+    public void setPropriedade(Propriedade propriedade) {
+        this.propriedade = propriedade;
+    }
+
+    @Transient
+    public boolean isNovo() {
+        return getCodigo() == null;
+    }
+
+    @Transient
+    public boolean isExistente() {
+        return !isNovo();
+    }
 
     @Override
     public int hashCode() {

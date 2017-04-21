@@ -42,6 +42,9 @@ public class Propriedade implements Serializable {
     @JoinColumn(name = "CODI_MUN", referencedColumnName = "CODI_MUN")
     private Municipio municipio;
 
+    @Column(name = "ISNE_PRO")
+    private String cadPro;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -82,6 +85,16 @@ public class Propriedade implements Serializable {
         this.municipio = municipio;
     }
 
+    public String getCadPro() {
+        return cadPro;
+    }
+
+    public void setCadPro(String cadPro) {
+        this.cadPro = cadPro;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -106,8 +119,5 @@ public class Propriedade implements Serializable {
         }
         return true;
     }
-    
-    
-    
 
 }

@@ -26,23 +26,19 @@
         </p:selectOneMenu>
 
         <p:outputLabel value="Cliente" for="cliente"/>
-        <p:autoComplete id="cliente" size="40" dropdown="true" value="#{cadastroPedidoBean.pedido.parceiro}" 
+        <p:autoComplete id="cliente" size="40"  value="#{cadastroPedidoBean.pedido.parceiro}" 
                         completeMethod="#{cadastroPedidoBean.completarCliente}" 
                         var="parceiro" itemLabel="#{parceiro.nome}"
                         itemValue="#{parceiro}"
                         forceSelection="true"
                         minQueryLength="3"
-                        maxResults="5"
+                        maxResults="5"                       
+
                         >
             <p:ajax event="itemSelect"  listener="#{cadastroPedidoBean.carregarPropriedades}"
                     update="propriedade"/>
 
         </p:autoComplete>
-
-
-
-
-
 
         <p:outputLabel value="Desconto" style="font-weight: bold" for="desconto"/>
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="desconto" />
@@ -52,14 +48,16 @@
             <f:selectItem itemLabel="Selecione" />
             <f:selectItems value="#{cadastroPedidoBean.cfops}" var="cfop"
                            itemValue="#{cfop}" itemLabel="#{cfop.codigo}"/>
+
         </p:selectOneMenu>
 
 
         <p:outputLabel value="Propriedade" for="propriedade"/>
-        <p:selectOneMenu id="propriedade">
+        <p:selectOneMenu id="propriedade" value="#{cadastroPedidoBean.pedido.propriedade}">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItems value="#{cadastroPedidoBean.propriedades}" var="propriedade"
                            itemLabel="#{propriedade.descricao}" itemValue="#{propriedade}"/>
+            <p:ajax event="itemSelect" update="cidade estado cadPro"/>
         </p:selectOneMenu>
 
 
@@ -74,11 +72,8 @@
         </p:selectOneMenu>
 
 
-        <p:outputLabel value="Consultor" for="consultor"/>
-        <p:selectOneMenu id="consultor">
-            <f:selectItem itemLabel="Selecione" />
-            <f:selectItem itemLabel="João" />
-        </p:selectOneMenu>
+        <p:outputLabel value="Cidade" for="cidade"/>
+        <h:outputText id="cidade" value="#{cadastroPedidoBean.pedido.propriedade.municipio.descricao}" />
 
 
         <p:outputLabel value="Total do pedido" style="font-weight: bold; font-size: 1.1em"/>
@@ -90,6 +85,26 @@
             <f:selectItems value="#{cadastroPedidoBean.condicoes}" var="condicao"
                            itemValue="${condicao}"    itemLabel="${condicao.descricao}"/>
         </p:selectOneMenu>
+        
+               <p:outputLabel value="Estado" for="estado"/>
+               <h:outputText id="estado" value="#{cadastroPedidoBean.pedido.propriedade.municipio.estado}" />
+
+
+                  
+               <p:outputLabel value="Teste" for="teste"/>
+               <h:outputText id="teste" value="####" />
+
+
+
+        <p:outputLabel value="Consultor" for="consultor"/>
+        <p:selectOneMenu id="consultor">
+            <f:selectItem itemLabel="Selecione" />
+            <f:selectItem itemLabel="João" />
+        </p:selectOneMenu>
+
+        
+               <p:outputLabel value="CAD PRO" for="cadPro"/>
+               <h:outputText id="cadPro" value="#{cadastroPedidoBean.pedido.propriedade.cadPro}" />
 
 
 
