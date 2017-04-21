@@ -11,12 +11,14 @@ import com.pontorural.pedidovenda.model.Condicao;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
+import com.pontorural.pedidovenda.model.Pessoal;
 import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Ciclos;
 import com.pontorural.pedidovenda.repository.Condicoes;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import com.pontorural.pedidovenda.repository.Parceiros;
+import com.pontorural.pedidovenda.repository.Pessoas;
 import com.pontorural.pedidovenda.repository.Propriedades;
 import java.io.Serializable;
 import java.util.List;
@@ -40,6 +42,8 @@ public class CadastroPedidoBean implements Serializable {
     private Operacao operacao;
     
     private Parceiro parceiro ;
+    
+    
 
     @Inject
     private Operacoes repositoryOperacoes;
@@ -58,6 +62,9 @@ public class CadastroPedidoBean implements Serializable {
     
     @Inject
     private Propriedades repositoryPropriedades;
+    
+    @Inject
+    private Pessoas respositoryPessoas;
 
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
@@ -65,6 +72,7 @@ public class CadastroPedidoBean implements Serializable {
     private List<Condicao> condicoes;
     private List<Parceiro> parceiros;
     private List<Propriedade> propriedades;
+    private List<Pessoal> pessoas;
 
     public CadastroPedidoBean() {
         limpar();
@@ -85,6 +93,10 @@ public class CadastroPedidoBean implements Serializable {
 
     public List<Parceiro> completarCliente(String nome) {
         return this.repositoryParceiros.porNome(nome);
+    }
+    
+      public List<Pessoal> completarConsultor(String nome) {
+        return this.respositoryPessoas.porNome(nome);
     }
 
     public void carregarCfops() {
@@ -178,10 +190,18 @@ public class CadastroPedidoBean implements Serializable {
         return propriedades;
     }
 
+
     public void setPropriedades(List<Propriedade> propriedades) {
         this.propriedades = propriedades;
     }
     
-    
+        public List<Pessoal> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoal> pessoas) {
+        this.pessoas = pessoas;
+    }
+
 
 }

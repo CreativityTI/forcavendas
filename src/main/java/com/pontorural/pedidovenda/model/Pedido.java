@@ -58,6 +58,11 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "PROP_PRO", referencedColumnName = "PROP_PRO")
     private Propriedade propriedade;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "COD1_PES", referencedColumnName = "CODI_PES")
+    private Pessoal pessoal;
+
     @Column(name = "DEMI_PED")
     private LocalDateTime emissao;
     @NotNull
@@ -135,6 +140,16 @@ public class Pedido implements Serializable {
     public void setPropriedade(Propriedade propriedade) {
         this.propriedade = propriedade;
     }
+
+    public Pessoal getPessoal() {
+        return pessoal;
+    }
+
+    public void setPessoal(Pessoal pessoal) {
+        this.pessoal = pessoal;
+    }
+    
+    
 
     @Transient
     public boolean isNovo() {

@@ -28,6 +28,9 @@ public class Parceiro implements Serializable {
     @Column(name = "RAZA_TRA")
     private String nome;
 
+    @Column(name = "CGC_TRA")
+    private String cfpCnpj;
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -43,6 +46,16 @@ public class Parceiro implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getCfpCnpj() {
+        return cfpCnpj;
+    }
+
+    public void setCfpCnpj(String cfpCnpj) {
+        this.cfpCnpj = cfpCnpj;
+    }
+    
+    
 
     @Override
     public int hashCode() {

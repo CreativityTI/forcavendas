@@ -36,7 +36,7 @@
 
                         >
             <p:ajax event="itemSelect"  listener="#{cadastroPedidoBean.carregarPropriedades}"
-                    update="propriedade"/>
+                    update="propriedade cpfCnpj"/>
 
         </p:autoComplete>
 
@@ -44,21 +44,16 @@
         <h:outputText value="R$ 0,00" style="font-weight: bold" id="desconto" />
 
         <p:outputLabel value="CFOP" for="cfop"/>
-        <p:selectOneMenu id="cfop" value="#{cadastroPedidoBean.pedido.cfop}">
+        <p:selectOneMenu id="cfop" value="#{cadastroPedidoBean.pedido.cfop}" class="js-cfop">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItems value="#{cadastroPedidoBean.cfops}" var="cfop"
                            itemValue="#{cfop}" itemLabel="#{cfop.codigo}"/>
 
         </p:selectOneMenu>
 
+        <p:outputLabel value="CFP/CNPJ" for="cpfCnpj"/>
+        <h:outputText id="cpfCnpj" value="#{cadastroPedidoBean.pedido.parceiro.cfpCnpj}" />
 
-        <p:outputLabel value="Propriedade" for="propriedade"/>
-        <p:selectOneMenu id="propriedade" value="#{cadastroPedidoBean.pedido.propriedade}">
-            <f:selectItem itemLabel="Selecione" />
-            <f:selectItems value="#{cadastroPedidoBean.propriedades}" var="propriedade"
-                           itemLabel="#{propriedade.descricao}" itemValue="#{propriedade}"/>
-            <p:ajax event="itemSelect" update="cidade estado cadPro"/>
-        </p:selectOneMenu>
 
 
         <p:outputLabel value="Subtotal" style="font-weight: bold"/>
@@ -71,9 +66,14 @@
                            itemValue="#{ciclo}" itemLabel="#{ciclo.descricao}"/>
         </p:selectOneMenu>
 
+              <p:outputLabel value="Propriedade" for="propriedade"/>
+        <p:selectOneMenu id="propriedade" value="#{cadastroPedidoBean.pedido.propriedade}">
+            <f:selectItem itemLabel="Selecione" />
+            <f:selectItems value="#{cadastroPedidoBean.propriedades}" var="propriedade"
+                           itemLabel="#{propriedade.descricao}" itemValue="#{propriedade}"/>
+            <p:ajax event="itemSelect" update="cidade estado cadPro"/>
+        </p:selectOneMenu>
 
-        <p:outputLabel value="Cidade" for="cidade"/>
-        <h:outputText id="cidade" value="#{cadastroPedidoBean.pedido.propriedade.municipio.descricao}" />
 
 
         <p:outputLabel value="Total do pedido" style="font-weight: bold; font-size: 1.1em"/>
@@ -85,26 +85,44 @@
             <f:selectItems value="#{cadastroPedidoBean.condicoes}" var="condicao"
                            itemValue="${condicao}"    itemLabel="${condicao.descricao}"/>
         </p:selectOneMenu>
-        
-               <p:outputLabel value="Estado" for="estado"/>
-               <h:outputText id="estado" value="#{cadastroPedidoBean.pedido.propriedade.municipio.estado}" />
 
 
-                  
-               <p:outputLabel value="Teste" for="teste"/>
-               <h:outputText id="teste" value="####" />
+         
+
+
+              <p:outputLabel value="CAD PRO" for="cadPro"/>
+        <h:outputText id="cadPro" value="#{cadastroPedidoBean.pedido.propriedade.cadPro}" />
+
+
+        <p:outputLabel value="Teste2" for="teste5"/>
+        <h:outputText id="teste5" value="####" />
 
 
 
+
+    
         <p:outputLabel value="Consultor" for="consultor"/>
-        <p:selectOneMenu id="consultor">
-            <f:selectItem itemLabel="Selecione" />
-            <f:selectItem itemLabel="João" />
-        </p:selectOneMenu>
+        <p:autoComplete id="consultor" size="40"  value="#{cadastroPedidoBean.pedido.pessoal}" 
+                        completeMethod="#{cadastroPedidoBean.completarConsultor}" 
+                        var="consultor" itemLabel="#{consultor.nome}"
+                        itemValue="#{consultor}"
+                        forceSelection="true"
+                        minQueryLength="3"
+                        maxResults="5" />
 
-        
-               <p:outputLabel value="CAD PRO" for="cadPro"/>
-               <h:outputText id="cadPro" value="#{cadastroPedidoBean.pedido.propriedade.cadPro}" />
+
+           <p:outputLabel value="Cidade" for="cidade"/>
+        <h:outputText id="cidade" value="#{cadastroPedidoBean.pedido.propriedade.municipio.descricao}" />
+
+        <p:outputLabel value="Teste1" for="teste3"/>
+        <h:outputText id="teste3" value="####" />
+        <p:outputLabel value="Teste2" for="teste4"/>
+        <h:outputText id="teste4" value="####" />
+
+        <p:outputLabel value="Estado" for="estado"/>
+        <h:outputText id="estado" value="#{cadastroPedidoBean.pedido.propriedade.municipio.estado}" />
+
+
 
 
 
