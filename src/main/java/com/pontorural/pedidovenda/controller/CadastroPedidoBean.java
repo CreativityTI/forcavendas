@@ -8,6 +8,7 @@ package com.pontorural.pedidovenda.controller;
 import com.pontorural.pedidovenda.model.Cfop;
 import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.model.Condicao;
+import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
@@ -16,10 +17,13 @@ import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Ciclos;
 import com.pontorural.pedidovenda.repository.Condicoes;
+import com.pontorural.pedidovenda.repository.Empresas;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import com.pontorural.pedidovenda.repository.Parceiros;
 import com.pontorural.pedidovenda.repository.Pessoas;
 import com.pontorural.pedidovenda.repository.Propriedades;
+import com.pontorural.pedidovenda.service.CadastroPedidoService;
+import com.pontorural.pedidovenda.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -40,10 +44,8 @@ public class CadastroPedidoBean implements Serializable {
     private Pedido pedido;
 
     private Operacao operacao;
-    
-    private Parceiro parceiro ;
-    
-    
+
+    private Parceiro parceiro;
 
     @Inject
     private Operacoes repositoryOperacoes;
@@ -59,12 +61,15 @@ public class CadastroPedidoBean implements Serializable {
 
     @Inject
     private Parceiros repositoryParceiros;
-    
+
     @Inject
     private Propriedades repositoryPropriedades;
-    
+
     @Inject
     private Pessoas respositoryPessoas;
+    
+    @Inject
+    private Empresas repositoryEmpresas;
 
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
@@ -73,6 +78,10 @@ public class CadastroPedidoBean implements Serializable {
     private List<Parceiro> parceiros;
     private List<Propriedade> propriedades;
     private List<Pessoal> pessoas;
+    private List<Empresa> empresas;
+
+    @Inject
+    private CadastroPedidoService cadastroPedidoService;
 
     public CadastroPedidoBean() {
         limpar();
@@ -87,15 +96,15 @@ public class CadastroPedidoBean implements Serializable {
         this.operacoes = this.repositoryOperacoes.todasOperacoes();
         this.ciclos = this.repositoryCiclos.todosCiclos();
         this.condicoes = this.repositoryCondicoes.todasCondicoes();
-      
+        this.empresas = this.repositoryEmpresas.todasEmpresas();
 
     }
 
     public List<Parceiro> completarCliente(String nome) {
         return this.repositoryParceiros.porNome(nome);
     }
-    
-      public List<Pessoal> completarConsultor(String nome) {
+
+    public List<Pessoal> completarConsultor(String nome) {
         return this.respositoryPessoas.porNome(nome);
     }
 
@@ -104,16 +113,16 @@ public class CadastroPedidoBean implements Serializable {
         cfops = repositoryCfops.todosCFOPSPorOperacao(pedido.getOperacao());
 
     }
-    
-    public void carregarPropriedades(){
+
+    public void carregarPropriedades() {
         propriedades = repositoryPropriedades.todasPropriedadesPorParceiro(pedido.getParceiro());
     }
-    
-    
 
     public void salvar() {
-        System.out.println("Operacao" + pedido.getOperacao().getCodigo());
-        System.out.println("CFOP" + pedido.getCfop().getCodigo());
+
+      this.pedido = this.cadastroPedidoService.salvar(this.pedido);
+
+        FacesUtil.addInfoMessage("Pedido saldo com sucesso!");
     }
 
     private void limpar() {
@@ -190,12 +199,11 @@ public class CadastroPedidoBean implements Serializable {
         return propriedades;
     }
 
-
     public void setPropriedades(List<Propriedade> propriedades) {
         this.propriedades = propriedades;
     }
-    
-        public List<Pessoal> getPessoas() {
+
+    public List<Pessoal> getPessoas() {
         return pessoas;
     }
 
@@ -203,5 +211,14 @@ public class CadastroPedidoBean implements Serializable {
         this.pessoas = pessoas;
     }
 
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+    
+    
 
 }

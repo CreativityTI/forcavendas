@@ -5,35 +5,32 @@
  */
 package com.pontorural.pedidovenda.converter;
 
-import com.pontorural.pedidovenda.model.Pessoal;
-import com.pontorural.pedidovenda.repository.Pessoas;
+import com.pontorural.pedidovenda.model.Empresa;
+import com.pontorural.pedidovenda.repository.Empresas;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *
- * @author rafael.lima
+ * @author Creativity
  */
-@FacesConverter(forClass = Pessoal.class)
-public class PessoaConverter implements Converter {
+@FacesConverter(forClass = Empresa.class)
+public class EmpresaConverter implements Converter {
 
     @Inject
-    private Pessoas pessoas;
-
-    
+    private Empresas empresas;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Pessoal retorno = null;
+        Empresa retorno = null;
 
         if (StringUtils.isNotEmpty(value)) {
             Integer codigo = new Integer(value);
-            retorno = pessoas.porId(codigo);
+            retorno = empresas.porId(codigo);
         }
 
         return retorno;
@@ -42,7 +39,7 @@ public class PessoaConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return ((Pessoal) value).getCodigo().toString();
+            return ((Empresa) value).getCodigo().toString();
         }
 
         return "";

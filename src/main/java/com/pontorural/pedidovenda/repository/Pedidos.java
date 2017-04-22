@@ -5,30 +5,27 @@
  */
 package com.pontorural.pedidovenda.repository;
 
-import com.pontorural.pedidovenda.model.Condicao;
+import com.pontorural.pedidovenda.model.Pedido;
 import java.io.Serializable;
-import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 /**
  *
- * @author rafael.lima
+ * @author Creativity
  */
-public class Condicoes implements Serializable {
+public class Pedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Inject
     private EntityManager manager;
-
-    public Condicao porId(Integer codigo) {
-        return manager.find(Condicao.class, codigo);
+    
+       public Pedido porId(Integer codigo) {
+        return manager.find(Pedido.class, codigo);
     }
 
-    public List<Condicao> todasCondicoes() {
-        return manager.createQuery("from Condicao c where c.codigo = 101", Condicao.class).getResultList();
-
+    public Pedido guardar(Pedido pedido) {
+        return this.manager.merge(pedido);
     }
-
 }

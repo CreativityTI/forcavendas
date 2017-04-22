@@ -6,13 +6,11 @@
 package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -36,8 +34,6 @@ public class Empresa implements Serializable {
     @Column(name = "IDEN_EMP")
     private String identificacao;
 
-    @OneToMany(mappedBy = "empresa")
-    private List<Usuario> usuarios;
 
     public Integer getCodigo() {
         return codigo;
@@ -63,13 +59,7 @@ public class Empresa implements Serializable {
         this.identificacao = identificacao;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
+  
 
     @Override
     public int hashCode() {

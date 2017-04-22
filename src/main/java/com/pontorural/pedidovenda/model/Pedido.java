@@ -6,15 +6,18 @@
 package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -28,8 +31,14 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PEDI_PED")
     private Integer codigo;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP")
+    private Empresa empresa;
 
     @NotNull
     @ManyToOne
@@ -64,10 +73,28 @@ public class Pedido implements Serializable {
     private Pessoal pessoal;
 
     @Column(name = "DEMI_PED")
-    private LocalDateTime emissao;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date emissao;
     @NotNull
     @Column(name = "VCTO_PED")
-    private LocalDateTime vencimento;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date vencimento;
+
+    @Column(name = "FPGT_PED")
+    private String formaPagamento;
+
+    @NotNull
+    @Column(name = "SERI_PED")
+    private String serie;
+
+    @Column(name = "TOTA_PED")
+    private BigDecimal totalPedido;
+
+    @Column(name = "TPRO_PED")
+    private BigDecimal totalProduto;
+    
+    @Column(name = "TFAT_PED")
+    private String tipoFaturamento;
 
     public Integer getCodigo() {
         return codigo;
@@ -117,19 +144,19 @@ public class Pedido implements Serializable {
         this.parceiro = parceiro;
     }
 
-    public LocalDateTime getEmissao() {
+    public Date getEmissao() {
         return emissao;
     }
 
-    public void setEmissao(LocalDateTime emissao) {
+    public void setEmissao(Date emissao) {
         this.emissao = emissao;
     }
 
-    public LocalDateTime getVencimento() {
+    public Date getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(LocalDateTime vencimento) {
+    public void setVencimento(Date vencimento) {
         this.vencimento = vencimento;
     }
 
@@ -148,15 +175,64 @@ public class Pedido implements Serializable {
     public void setPessoal(Pessoal pessoal) {
         this.pessoal = pessoal;
     }
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public BigDecimal getTotalPedido() {
+        return totalPedido;
+    }
+
+    public void setTotalPedido(BigDecimal totalPedido) {
+        this.totalPedido = totalPedido;
+    }
+
+    public BigDecimal getTotalProduto() {
+        return totalProduto;
+    }
+
+    public void setTotalProduto(BigDecimal totalProduto) {
+        this.totalProduto = totalProduto;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public String getTipoFaturamento() {
+        return tipoFaturamento;
+    }
+
+    public void setTipoFaturamento(String tipoFaturamento) {
+        this.tipoFaturamento = tipoFaturamento;
+    }
+    
     
     
 
-    @Transient
+  
     public boolean isNovo() {
         return getCodigo() == null;
     }
 
-    @Transient
+  
     public boolean isExistente() {
         return !isNovo();
     }

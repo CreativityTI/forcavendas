@@ -5,12 +5,8 @@
  */
 package com.pontorural.pedidovenda.converter;
 
-import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.model.Condicao;
-import com.pontorural.pedidovenda.model.Operacao;
-import com.pontorural.pedidovenda.repository.Ciclos;
 import com.pontorural.pedidovenda.repository.Condicoes;
-import com.pontorural.pedidovenda.repository.Operacoes;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;

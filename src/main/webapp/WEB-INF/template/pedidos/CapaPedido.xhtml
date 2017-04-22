@@ -66,7 +66,7 @@
                            itemValue="#{ciclo}" itemLabel="#{ciclo.descricao}"/>
         </p:selectOneMenu>
 
-              <p:outputLabel value="Propriedade" for="propriedade"/>
+        <p:outputLabel value="Propriedade" for="propriedade"/>
         <p:selectOneMenu id="propriedade" value="#{cadastroPedidoBean.pedido.propriedade}">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItems value="#{cadastroPedidoBean.propriedades}" var="propriedade"
@@ -87,10 +87,10 @@
         </p:selectOneMenu>
 
 
-         
 
 
-              <p:outputLabel value="CAD PRO" for="cadPro"/>
+
+        <p:outputLabel value="CAD PRO" for="cadPro"/>
         <h:outputText id="cadPro" value="#{cadastroPedidoBean.pedido.propriedade.cadPro}" />
 
 
@@ -100,7 +100,7 @@
 
 
 
-    
+
         <p:outputLabel value="Consultor" for="consultor"/>
         <p:autoComplete id="consultor" size="40"  value="#{cadastroPedidoBean.pedido.pessoal}" 
                         completeMethod="#{cadastroPedidoBean.completarConsultor}" 
@@ -111,13 +111,20 @@
                         maxResults="5" />
 
 
-           <p:outputLabel value="Cidade" for="cidade"/>
+        <p:outputLabel value="Cidade" for="cidade"/>
         <h:outputText id="cidade" value="#{cadastroPedidoBean.pedido.propriedade.municipio.descricao}" />
 
         <p:outputLabel value="Teste1" for="teste3"/>
         <h:outputText id="teste3" value="####" />
-        <p:outputLabel value="Teste2" for="teste4"/>
-        <h:outputText id="teste4" value="####" />
+
+        <p:outputLabel value="Empresa" for="empresa"/>
+        <p:selectOneMenu id="empresa" value="#{cadastroPedidoBean.pedido.empresa}">
+            <f:selectItem itemLabel="Selecione" />
+            <f:selectItems value="#{cadastroPedidoBean.empresas}" itemLabel="#{empresa.codigo}" var="empresa" 
+                           itemValue="#{empresa}"
+                           />
+
+        </p:selectOneMenu>
 
         <p:outputLabel value="Estado" for="estado"/>
         <h:outputText id="estado" value="#{cadastroPedidoBean.pedido.propriedade.municipio.estado}" />
