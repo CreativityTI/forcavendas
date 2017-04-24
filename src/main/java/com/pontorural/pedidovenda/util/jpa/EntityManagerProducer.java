@@ -12,7 +12,6 @@ import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.hibernate.Session;
 
 /**
  *
@@ -28,11 +27,11 @@ public class EntityManagerProducer {
 	}
 	
 	@Produces @RequestScoped
-	public Session createEntityManager() {
-		return (Session) this.factory.createEntityManager();
+	public EntityManager createEntityManager() {
+		return factory.createEntityManager();
 	}
 	
-	public void closeEntityManager(@Disposes Session manager) {
+	public void closeEntityManager(@Disposes EntityManager manager) {
 		manager.close();
 	}
 	

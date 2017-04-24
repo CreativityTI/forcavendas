@@ -89,6 +89,9 @@ public class CadastroPedidoBean implements Serializable {
     }
 
     public void inicializar() {
+        if (this.pedido == null) {
+            limpar();
+        }
         if (FacesUtil.isNotPostback()) {
             this.operacoes = this.repositoryOperacoes.todasOperacoes();
             this.ciclos = this.repositoryCiclos.todosCiclos();
