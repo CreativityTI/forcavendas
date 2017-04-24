@@ -38,9 +38,11 @@ public class PedidoConverter implements Converter {
     }
 
     @Override
+
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return ((Pedido) value).getCodigo().toString();
+            Pedido pedido = (Pedido) value;
+            return pedido.getCodigo() == null ? null : pedido.getCodigo().toString();
         }
 
         return "";

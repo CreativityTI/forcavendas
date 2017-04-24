@@ -67,7 +67,7 @@ public class CadastroPedidoBean implements Serializable {
 
     @Inject
     private Pessoas respositoryPessoas;
-    
+
     @Inject
     private Empresas repositoryEmpresas;
 
@@ -89,15 +89,20 @@ public class CadastroPedidoBean implements Serializable {
     }
 
     public void inicializar() {
+        if (FacesUtil.isNotPostback()) {
+            this.operacoes = this.repositoryOperacoes.todasOperacoes();
+            this.ciclos = this.repositoryCiclos.todosCiclos();
+            this.condicoes = this.repositoryCondicoes.todasCondicoes();
+            this.empresas = this.repositoryEmpresas.todasEmpresas();
+            if (this.operacao != null) {
+                carregarCfops();
 
-        if (this.pedido == null) {
-            limpar();
+            }
+
+            if (this.parceiro != null) {
+                carregarPropriedades();
+            }
         }
-        this.operacoes = this.repositoryOperacoes.todasOperacoes();
-        this.ciclos = this.repositoryCiclos.todosCiclos();
-        this.condicoes = this.repositoryCondicoes.todasCondicoes();
-        this.empresas = this.repositoryEmpresas.todasEmpresas();
-
     }
 
     public List<Parceiro> completarCliente(String nome) {
@@ -120,7 +125,7 @@ public class CadastroPedidoBean implements Serializable {
 
     public void salvar() {
 
-      this.pedido = this.cadastroPedidoService.salvar(this.pedido);
+        this.pedido = this.cadastroPedidoService.salvar(this.pedido);
 
         FacesUtil.addInfoMessage("Pedido saldo com sucesso!");
     }
@@ -131,12 +136,21 @@ public class CadastroPedidoBean implements Serializable {
 
     }
 
+    public boolean isEditando() {
+        return this.pedido.getCodigo() != null;
+    }
+
     public Pedido getPedido() {
         return pedido;
     }
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+        if (this.pedido != null) {
+            this.operacao = this.pedido.getOperacao();
+            this.parceiro = this.pedido.getParceiro();
+
+        }
     }
 
     public List<Operacao> getOperacoes() {
@@ -218,7 +232,5 @@ public class CadastroPedidoBean implements Serializable {
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
     }
-    
-    
 
 }
