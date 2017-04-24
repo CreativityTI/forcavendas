@@ -35,6 +35,7 @@ public class Pedido implements Serializable {
     @Column(name = "PEDI_PED")
     private Integer codigo;
 
+    
     @NotNull
     @ManyToOne
     @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP")

@@ -5,6 +5,7 @@
  */
 package com.pontorural.pedidovenda.service;
 
+import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.Pedido;
 import com.pontorural.pedidovenda.repository.Pedidos;
 import com.pontorural.pedidovenda.util.jpa.Transactional;
@@ -17,12 +18,12 @@ import javax.inject.Inject;
  * @author Creativity
  */
 public class CadastroPedidoService implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     @Inject
     private Pedidos pedidos;
-
+    
     @Transactional
     public Pedido salvar(Pedido pedido) {
         if (pedido.isNovo()) {
@@ -30,10 +31,12 @@ public class CadastroPedidoService implements Serializable {
             pedido.setSerie("PE");
             pedido.setFormaPagamento("03");
             pedido.setTipoFaturamento("1");
-           
-
+            
+        }else{
+            Empresa empresa = pedido.getEmpresa();
+            pedido.setEmpresa(empresa);
         }
-
+        
         pedido = this.pedidos.guardar(pedido);
         return pedido;
     }
