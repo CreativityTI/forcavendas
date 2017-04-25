@@ -7,13 +7,14 @@ package com.pontorural.pedidovenda.converter;
 
 import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.repository.Ciclos;
+import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-
 import org.apache.commons.lang3.StringUtils;
+
 
 /**
  *
@@ -25,27 +26,32 @@ public class CicloConverter implements Converter {
     @Inject
     private Ciclos ciclos;
 
-    
-
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Ciclo retorno = null;
-
-        if (StringUtils.isNotEmpty(value)) {
-            Integer codigo = new Integer(value);
-            retorno = ciclos.porId(codigo);
+        if (value != null) {
+            return this.getAttributesFrom(component).get(value);
         }
-
-        return retorno;
+        return null;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if (value != null) {
-            return ((Ciclo) value).getCodigo().toString();
+        if (StringUtils.isNotEmpty(value.toString())) {
+            Ciclo classe = (Ciclo) value;
+            this.addAttribute(component, classe);
+            Integer codigo = classe.getCodigo();
+            if (codigo != null) {
+                return String.valueOf(codigo);
+            }
         }
-
-        return "";
+        return (String) value;
     }
 
+    private void addAttribute(UIComponent component, Ciclo classe) {
+        this.getAttributesFrom(component).put(classe.getCodigo().toString(), classe);
+    }
+
+    private Map<String, Object> getAttributesFrom(UIComponent component) {
+        return component.getAttributes();
+    }
 }

@@ -28,7 +28,7 @@ public class CadastroPedidoService implements Serializable {
     public Pedido salvar(Pedido pedido) {
         if (pedido.isNovo()) {
             pedido.setEmissao(new Date());
-            pedido.setSerie("PE");
+            pedido.getPedidoId().setSerie("PE");
             pedido.setFormaPagamento("03");
             pedido.setTipoFaturamento("1");
             

@@ -12,6 +12,7 @@ import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
+import com.pontorural.pedidovenda.model.PedidoId;
 import com.pontorural.pedidovenda.model.Pessoal;
 import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
@@ -92,15 +93,14 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
-        if (FacesUtil.isNotPostback()) {
-            this.operacoes = this.repositoryOperacoes.todasOperacoes();
-            this.ciclos = this.repositoryCiclos.todosCiclos();
-            this.condicoes = this.repositoryCondicoes.todasCondicoes();
-            this.empresas = this.repositoryEmpresas.todasEmpresas();
-            if (this.operacao != null) {
-                carregarCfops();
 
-            }
+        this.operacoes = this.repositoryOperacoes.todasOperacoes();
+        this.ciclos = this.repositoryCiclos.todosCiclos();
+        this.condicoes = this.repositoryCondicoes.todasCondicoes();
+        this.empresas = this.repositoryEmpresas.todasEmpresas();
+
+        if (this.operacao != null) {
+            carregarCfops();
 
             if (this.parceiro != null) {
                 carregarPropriedades();
@@ -136,11 +136,12 @@ public class CadastroPedidoBean implements Serializable {
     private void limpar() {
 
         pedido = new Pedido();
+        pedido.setPedidoId(new com.pontorural.pedidovenda.model.PedidoId());
 
     }
 
     public boolean isEditando() {
-        return this.pedido.getCodigo() != null;
+        return this.pedido.getPedidoId() != null;
     }
 
     public Pedido getPedido() {

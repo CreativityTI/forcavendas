@@ -6,6 +6,7 @@
 package com.pontorural.pedidovenda.converter;
 
 import com.pontorural.pedidovenda.model.Pedido;
+import com.pontorural.pedidovenda.model.PedidoId;
 import com.pontorural.pedidovenda.repository.Pedidos;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -30,7 +31,7 @@ public class PedidoConverter implements Converter {
         Pedido retorno = null;
 
         if (StringUtils.isNotEmpty(value)) {
-            Integer codigo = new Integer(value);
+            PedidoId codigo = new PedidoId();
             retorno = pedidos.porId(codigo);
         }
 
@@ -42,7 +43,7 @@ public class PedidoConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
             Pedido pedido = (Pedido) value;
-            return pedido.getCodigo() == null ? null : pedido.getCodigo().toString();
+            return pedido.getPedidoId().getCodigo() == null ? null : pedido.getPedidoId().getCodigo().toString();
         }
 
         return "";
