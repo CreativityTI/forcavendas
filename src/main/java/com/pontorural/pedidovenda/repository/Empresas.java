@@ -27,7 +27,7 @@ public class Empresas implements Serializable{
     }
 
     public List<Empresa> todasEmpresas() {
-        return manager.createQuery("from Empresa e where e.codigo = 1", Empresa.class).getResultList();
+        return manager.createQuery("from Empresa", Empresa.class).getResultList();
 
     }
 

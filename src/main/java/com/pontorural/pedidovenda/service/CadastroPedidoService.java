@@ -5,7 +5,6 @@
  */
 package com.pontorural.pedidovenda.service;
 
-import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.Pedido;
 import com.pontorural.pedidovenda.repository.Pedidos;
 import com.pontorural.pedidovenda.util.jpa.Transactional;
@@ -33,7 +32,7 @@ public class CadastroPedidoService implements Serializable {
             pedido.setTipoFaturamento("1");
         }
 
-        pedido = this.pedidos.guardar(pedido);
+        pedido = this.pedidos.salvar(pedido);
         return pedido;
     }
 

@@ -7,13 +7,19 @@ package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
@@ -24,6 +30,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "PEDIDO")
+@SequenceGenerator(name = "PEDIDO_SEQ", sequenceName = "AFV_PEDIDO_SEQ", initialValue = 1, allocationSize = 1)
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +41,7 @@ public class Pedido implements Serializable {
     private Empresa empresa;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PEDIDO_SEQ")
     @Column(name = "PEDI_PED")
     private Integer codigo;
 
@@ -91,6 +99,11 @@ public class Pedido implements Serializable {
 
     @Column(name = "TFAT_PED")
     private String tipoFaturamento;
+
+    
+   
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens = new ArrayList<>();
 
     public Operacao getOperacao() {
         return operacao;
@@ -219,6 +232,18 @@ public class Pedido implements Serializable {
     public void setSerie(String serie) {
         this.serie = serie;
     }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+ 
+    
+    
 
     public boolean isNovo() {
         return getCodigo() == null;

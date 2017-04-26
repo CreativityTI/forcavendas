@@ -5,6 +5,7 @@
  */
 package com.pontorural.pedidovenda.repository;
 
+import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.Pedido;
 
 import com.pontorural.pedidovenda.repository.filter.PedidoFilter;
@@ -32,13 +33,15 @@ public class Pedidos implements Serializable {
         return manager.find(Pedido.class, codigo);
     }
 
-    public Pedido guardar(Pedido pedido ) {
+    public Pedido salvar(Pedido pedido) {
 
         return this.manager.merge(pedido);
+
     }
 
     @SuppressWarnings("unchecked")
-    public List<Pedido> filtrados(PedidoFilter filtro) {
+    public List<Pedido> filtrados(PedidoFilter filtro
+    ) {
         Session session = this.manager.unwrap(Session.class);
 
         Criteria criteria = session.createCriteria(Pedido.class);
