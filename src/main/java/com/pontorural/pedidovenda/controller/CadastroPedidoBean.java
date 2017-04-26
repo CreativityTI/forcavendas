@@ -92,14 +92,15 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
+        if (FacesUtil.isNotPostback()) {
+            this.operacoes = this.repositoryOperacoes.todasOperacoes();
+            this.ciclos = this.repositoryCiclos.todosCiclos();
+            this.condicoes = this.repositoryCondicoes.todasCondicoes();
+            this.empresas = this.repositoryEmpresas.todasEmpresas();
+            if (this.operacao != null) {
+                carregarCfops();
 
-        this.operacoes = this.repositoryOperacoes.todasOperacoes();
-        this.ciclos = this.repositoryCiclos.todosCiclos();
-        this.condicoes = this.repositoryCondicoes.todasCondicoes();
-        this.empresas = this.repositoryEmpresas.todasEmpresas();
-
-        if (this.operacao != null) {
-            carregarCfops();
+            }
 
             if (this.parceiro != null) {
                 carregarPropriedades();
@@ -135,7 +136,7 @@ public class CadastroPedidoBean implements Serializable {
     private void limpar() {
 
         pedido = new Pedido();
-      
+
     }
 
     public boolean isEditando() {
