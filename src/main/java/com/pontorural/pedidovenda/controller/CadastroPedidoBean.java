@@ -12,7 +12,6 @@ import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
-import com.pontorural.pedidovenda.model.PedidoId;
 import com.pontorural.pedidovenda.model.Pessoal;
 import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
@@ -136,12 +135,11 @@ public class CadastroPedidoBean implements Serializable {
     private void limpar() {
 
         pedido = new Pedido();
-        pedido.setPedidoId(new com.pontorural.pedidovenda.model.PedidoId());
-
+      
     }
 
     public boolean isEditando() {
-        return this.pedido.getPedidoId() != null;
+        return this.pedido.getCodigo() != null;
     }
 
     public Pedido getPedido() {

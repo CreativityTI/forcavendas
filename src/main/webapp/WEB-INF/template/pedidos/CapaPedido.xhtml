@@ -6,13 +6,13 @@
 
     <p:panelGrid columns="6" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo, rotulo, campo">
         <p:outputLabel value="Número" />
-        <p:inputText value="#{cadastroPedidoBean.pedido.pedidoId.codigo}" />
+        <p:inputText value="#{cadastroPedidoBean.pedido.codigo}" />
 
         <p:outputLabel value="Data de Emissão" />
         <h:outputText value="#{cadastroPedidoBean.pedido.emissao}" />
 
         <p:outputLabel value="Vencimento" for="vencimento" />
-        <p:calendar id="vencimento" size="10" pattern="dd/MM/yyyy" locale="pt_BR" readonly="true"
+        <p:calendar id="vencimento" size="10" pattern="dd/MM/yyyy" locale="pt_BR"
                     value="#{cadastroPedidoBean.pedido.vencimento}"/>
 
         <p:outputLabel value="Operação" for="operacao"/>
@@ -118,7 +118,7 @@
         <h:outputText id="teste3" value="####" />
 
         <p:outputLabel value="Empresa" for="empresa"/>
-        <p:selectOneMenu id="empresa" value="#{cadastroPedidoBean.pedido.pedidoId}">
+        <p:selectOneMenu id="empresa" value="#{cadastroPedidoBean.pedido.empresa}">
             <f:selectItem itemLabel="Selecione" />
             <f:selectItems value="#{cadastroPedidoBean.empresas}" itemLabel="#{empresa.codigo}" var="empresa" 
                            itemValue="#{empresa}"

@@ -18,26 +18,23 @@ import javax.inject.Inject;
  * @author Creativity
  */
 public class CadastroPedidoService implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Inject
     private Pedidos pedidos;
-    
+
     @Transactional
     public Pedido salvar(Pedido pedido) {
         if (pedido.isNovo()) {
             pedido.setEmissao(new Date());
-            pedido.getPedidoId().setSerie("PE");
+            pedido.setSerie("PE");
             pedido.setFormaPagamento("03");
             pedido.setTipoFaturamento("1");
-            
-        }else{
-            Empresa empresa = pedido.getEmpresa();
-            pedido.setEmpresa(empresa);
         }
-        
+
         pedido = this.pedidos.guardar(pedido);
         return pedido;
     }
+
 }

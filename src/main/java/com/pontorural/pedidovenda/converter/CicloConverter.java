@@ -6,13 +6,11 @@
 package com.pontorural.pedidovenda.converter;
 
 import com.pontorural.pedidovenda.model.Ciclo;
-import com.pontorural.pedidovenda.repository.Ciclos;
 import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -22,9 +20,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 @FacesConverter(forClass = Ciclo.class)
 public class CicloConverter implements Converter {
-
-    @Inject
-    private Ciclos ciclos;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

@@ -6,7 +6,7 @@
 package com.pontorural.pedidovenda.repository;
 
 import com.pontorural.pedidovenda.model.Pedido;
-import com.pontorural.pedidovenda.model.PedidoId;
+
 import com.pontorural.pedidovenda.repository.filter.PedidoFilter;
 import java.io.Serializable;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Pedidos implements Serializable {
     @Inject
     private EntityManager manager;
 
-    public Pedido porId(PedidoId codigo) {
+    public Pedido porId(Integer codigo) {
         return manager.find(Pedido.class, codigo);
     }
 
@@ -45,12 +45,12 @@ public class Pedidos implements Serializable {
 
         if (filtro.getNumeroDe() != null) {
             // id deve ser maior ou igual (ge = greater or equals) a filtro.numeroDe
-            criteria.add(Restrictions.ge("pedidoId.codigo", filtro.getNumeroDe()));
+            criteria.add(Restrictions.ge("codigo", filtro.getNumeroDe()));
         }
 
         if (filtro.getNumeroAte() != null) {
             // id deve ser menor ou igual (le = lower or equal) a filtro.numeroDe
-            criteria.add(Restrictions.le("pedidoId.codigo", filtro.getNumeroAte()));
+            criteria.add(Restrictions.le("codigo", filtro.getNumeroAte()));
         }
 
         if (filtro.getEmissaoDe() != null) {
@@ -61,7 +61,7 @@ public class Pedidos implements Serializable {
             criteria.add(Restrictions.le("emissao", filtro.getEmissaoAte()));
         }
 
-        return criteria.addOrder(Order.asc("pedidoId.codigo")).list();
+        return criteria.addOrder(Order.asc("codigo")).list();
 
     }
 }

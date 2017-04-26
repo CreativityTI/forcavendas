@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -29,14 +29,17 @@ public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    protected PedidoId pedidoId;
-
-    @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @NotNull
+    @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP")
+    @ManyToOne
     private Empresa empresa;
 
-  
+    @Id
+    @Column(name = "PEDI_PED")
+    private Integer codigo;
+
+    @Column(name = "SERI_PED")
+    private String serie;
 
     @NotNull
     @ManyToOne
@@ -81,8 +84,6 @@ public class Pedido implements Serializable {
     @Column(name = "FPGT_PED")
     private String formaPagamento;
 
- 
-
     @Column(name = "TOTA_PED")
     private BigDecimal totalPedido;
 
@@ -91,8 +92,6 @@ public class Pedido implements Serializable {
 
     @Column(name = "TFAT_PED")
     private String tipoFaturamento;
-
-
 
     public Operacao getOperacao() {
         return operacao;
@@ -174,7 +173,6 @@ public class Pedido implements Serializable {
         this.formaPagamento = formaPagamento;
     }
 
-
     public BigDecimal getTotalPedido() {
         return totalPedido;
     }
@@ -191,14 +189,6 @@ public class Pedido implements Serializable {
         this.totalProduto = totalProduto;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
     public String getTipoFaturamento() {
         return tipoFaturamento;
     }
@@ -207,18 +197,32 @@ public class Pedido implements Serializable {
         this.tipoFaturamento = tipoFaturamento;
     }
 
-    public PedidoId getPedidoId() {
-        return pedidoId;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setPedidoId(PedidoId pedidoId) {
-        this.pedidoId = pedidoId;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
-    
-    
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
 
     public boolean isNovo() {
-        return getPedidoId() == null;
+        return getCodigo() == null;
     }
 
     public boolean isExistente() {
@@ -227,8 +231,8 @@ public class Pedido implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.pedidoId);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.codigo);
         return hash;
     }
 
@@ -244,17 +248,10 @@ public class Pedido implements Serializable {
             return false;
         }
         final Pedido other = (Pedido) obj;
-        if (!Objects.equals(this.pedidoId, other.pedidoId)) {
+        if (!Objects.equals(this.codigo, other.codigo)) {
             return false;
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Pedido{" + "pedidoId=" + pedidoId + '}';
-    }
-    
-    
 
 }
