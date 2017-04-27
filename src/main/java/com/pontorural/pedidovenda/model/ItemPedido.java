@@ -21,10 +21,10 @@ import javax.persistence.Table;
 @Table(name = "IPEDIDO")
 public class ItemPedido implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @ManyToOne
     private Pedido pedido;
-
-    private static final long serialVersionUID = 1L;
 
     @EmbeddedId
     private PedidoPK pedidoPK;
@@ -48,8 +48,6 @@ public class ItemPedido implements Serializable {
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-    
-    
 
     public PedidoPK getPedidoPK() {
         return pedidoPK;
