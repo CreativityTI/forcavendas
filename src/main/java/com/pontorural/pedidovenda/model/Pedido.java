@@ -92,18 +92,43 @@ public class Pedido implements Serializable {
     private String formaPagamento;
 
     @Column(name = "TOTA_PED")
-    private BigDecimal totalPedido;
+    private BigDecimal valorTotalPedido = BigDecimal.TEN;
 
     @Column(name = "TPRO_PED")
-    private BigDecimal totalProduto;
+    private BigDecimal valorTotalProdutos = BigDecimal.ZERO;
+
+    @Column(name = "DESC_PED")
+    private BigDecimal valorTotalDesconto = BigDecimal.ZERO;
 
     @Column(name = "TFAT_PED")
     private String tipoFaturamento;
 
-    
-   
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens = new ArrayList<>();
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
 
     public Operacao getOperacao() {
         return operacao;
@@ -145,22 +170,6 @@ public class Pedido implements Serializable {
         this.parceiro = parceiro;
     }
 
-    public Date getEmissao() {
-        return emissao;
-    }
-
-    public void setEmissao(Date emissao) {
-        this.emissao = emissao;
-    }
-
-    public Date getVencimento() {
-        return vencimento;
-    }
-
-    public void setVencimento(Date vencimento) {
-        this.vencimento = vencimento;
-    }
-
     public Propriedade getPropriedade() {
         return propriedade;
     }
@@ -177,6 +186,22 @@ public class Pedido implements Serializable {
         this.pessoal = pessoal;
     }
 
+    public Date getEmissao() {
+        return emissao;
+    }
+
+    public void setEmissao(Date emissao) {
+        this.emissao = emissao;
+    }
+
+    public Date getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(Date vencimento) {
+        this.vencimento = vencimento;
+    }
+
     public String getFormaPagamento() {
         return formaPagamento;
     }
@@ -185,20 +210,28 @@ public class Pedido implements Serializable {
         this.formaPagamento = formaPagamento;
     }
 
-    public BigDecimal getTotalPedido() {
-        return totalPedido;
+    public BigDecimal getValorTotalPedido() {
+        return valorTotalPedido;
     }
 
-    public void setTotalPedido(BigDecimal totalPedido) {
-        this.totalPedido = totalPedido;
+    public void setValorTotalPedido(BigDecimal valorTotalPedido) {
+        this.valorTotalPedido = valorTotalPedido;
     }
 
-    public BigDecimal getTotalProduto() {
-        return totalProduto;
+    public BigDecimal getValorTotalProdutos() {
+        return valorTotalProdutos;
     }
 
-    public void setTotalProduto(BigDecimal totalProduto) {
-        this.totalProduto = totalProduto;
+    public void setValorTotalProdutos(BigDecimal valorTotalProdutos) {
+        this.valorTotalProdutos = valorTotalProdutos;
+    }
+
+    public BigDecimal getValorTotalDesconto() {
+        return valorTotalDesconto;
+    }
+
+    public void setValorTotalDesconto(BigDecimal valorTotalDesconto) {
+        this.valorTotalDesconto = valorTotalDesconto;
     }
 
     public String getTipoFaturamento() {
@@ -209,30 +242,6 @@ public class Pedido implements Serializable {
         this.tipoFaturamento = tipoFaturamento;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
-    }
-
     public List<ItemPedido> getItens() {
         return itens;
     }
@@ -240,10 +249,6 @@ public class Pedido implements Serializable {
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
-
- 
-    
-    
 
     public boolean isNovo() {
         return getCodigo() == null;
@@ -276,6 +281,21 @@ public class Pedido implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    
+
+    public void recalcularValorTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        total = total.add(getValorTotalPedido().subtract(getValorTotalDesconto()));
+        for (ItemPedido item : this.getItens()) {
+            if (item.getProduto() != null && item.getProduto().getCodigo() != null) {
+                total = total.add(item.getValorTotal());
+            }
+
+        }
+
+        this.setValorTotalPedido(total);
     }
 
 }

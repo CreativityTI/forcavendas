@@ -138,6 +138,10 @@ public class CadastroPedidoBean implements Serializable {
         pedido = new Pedido();
 
     }
+    
+    public void recalcularPedido(){
+        this.pedido.recalcularValorTotal();
+    }
 
     public boolean isEditando() {
         return this.pedido.getCodigo() != null;
