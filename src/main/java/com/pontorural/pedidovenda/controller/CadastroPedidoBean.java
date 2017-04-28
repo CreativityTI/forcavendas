@@ -9,10 +9,12 @@ import com.pontorural.pedidovenda.model.Cfop;
 import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.model.Condicao;
 import com.pontorural.pedidovenda.model.Empresa;
+import com.pontorural.pedidovenda.model.ItemPedido;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
 import com.pontorural.pedidovenda.model.Pessoal;
+import com.pontorural.pedidovenda.model.Produto;
 import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Ciclos;
@@ -21,6 +23,7 @@ import com.pontorural.pedidovenda.repository.Empresas;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import com.pontorural.pedidovenda.repository.Parceiros;
 import com.pontorural.pedidovenda.repository.Pessoas;
+import com.pontorural.pedidovenda.repository.Produtos;
 import com.pontorural.pedidovenda.repository.Propriedades;
 import com.pontorural.pedidovenda.service.CadastroPedidoService;
 import com.pontorural.pedidovenda.util.jsf.FacesUtil;
@@ -71,6 +74,9 @@ public class CadastroPedidoBean implements Serializable {
     @Inject
     private Empresas repositoryEmpresas;
 
+    @Inject
+    private Produtos repositoryProdutos;
+
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
     private List<Ciclo> ciclos;
@@ -79,9 +85,12 @@ public class CadastroPedidoBean implements Serializable {
     private List<Propriedade> propriedades;
     private List<Pessoal> pessoas;
     private List<Empresa> empresas;
+    private List<Produto> produtos;
 
     @Inject
     private CadastroPedidoService cadastroPedidoService;
+
+    private Produto produtoLinhaEditavel;
 
     public CadastroPedidoBean() {
         limpar();
@@ -91,6 +100,7 @@ public class CadastroPedidoBean implements Serializable {
     public void inicializar() {
         if (this.pedido == null) {
             limpar();
+            this.pedido.adicionarItemVazio();
         }
         if (FacesUtil.isNotPostback()) {
             this.operacoes = this.repositoryOperacoes.todasOperacoes();
@@ -116,6 +126,11 @@ public class CadastroPedidoBean implements Serializable {
         return this.respositoryPessoas.porNome(nome);
     }
 
+    public List<Produto> completarProduto(String descricao) {
+        return this.repositoryProdutos.porDescricao(descricao);
+
+    }
+
     public void carregarCfops() {
 
         cfops = repositoryCfops.todosCFOPSPorOperacao(pedido.getOperacao());
@@ -123,14 +138,38 @@ public class CadastroPedidoBean implements Serializable {
     }
 
     public void carregarPropriedades() {
+
         propriedades = repositoryPropriedades.todasPropriedadesPorParceiro(pedido.getParceiro());
     }
 
+    public void carregarProdutoLinhaEditavel() {
+        ItemPedido item = this.pedido.getItens().get(0);
+        if (this.produtoLinhaEditavel != null) {
+            if (this.existeItemComProduto(this.produtoLinhaEditavel)) {
+                FacesUtil.addErrorMessage("já existe um item no pedido com o produto informado");
+            } else {
+
+                item.setProduto(produtoLinhaEditavel);
+                item.setValorUnitario(this.produtoLinhaEditavel.getValor());
+                this.pedido.adicionarItemVazio();
+                this.produtoLinhaEditavel = null;
+                this.pedido.recalcularValorTotal();
+            }
+
+        }
+
+    }
+
     public void salvar() {
+        this.pedido.removerItemVazio();
+        try {
+            this.pedido = this.cadastroPedidoService.salvar(this.pedido);
+            FacesUtil.addInfoMessage("Pedido saldo com sucesso!");
+        } finally {
+            
+           this.pedido.adicionarItemVazio();
+        }
 
-        this.pedido = this.cadastroPedidoService.salvar(pedido);
-
-        FacesUtil.addInfoMessage("Pedido saldo com sucesso!");
     }
 
     private void limpar() {
@@ -138,8 +177,8 @@ public class CadastroPedidoBean implements Serializable {
         pedido = new Pedido();
 
     }
-    
-    public void recalcularPedido(){
+
+    public void recalcularPedido() {
         this.pedido.recalcularValorTotal();
     }
 
@@ -238,6 +277,26 @@ public class CadastroPedidoBean implements Serializable {
 
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
+    }
+
+    public Produto getProdutoLinhaEditavel() {
+        return produtoLinhaEditavel;
+    }
+
+    public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
+        this.produtoLinhaEditavel = produtoLinhaEditavel;
+    }
+
+    private boolean existeItemComProduto(Produto produto) {
+        boolean existeItem = false;
+        for (ItemPedido item : this.getPedido().getItens()) {
+            if (produto.equals(item.getProduto())) {
+                existeItem = true;
+                break;
+            }
+
+        }
+        return existeItem;
     }
 
 }

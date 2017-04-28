@@ -30,6 +30,15 @@ public class CadastroPedidoService implements Serializable {
             pedido.setSerie("PE");
             pedido.setFormaPagamento("03");
             pedido.setTipoFaturamento("1");
+            
+
+        }
+
+        pedido.recalcularValorTotal();
+        pedido.recalcularValorTotalProdutos();
+
+        if (pedido.getItens().isEmpty()) {
+            throw new NegocioException("O Pedido deve possuir pelo menos um item");
         }
 
         pedido = this.pedidos.salvar(pedido);

@@ -11,7 +11,6 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,7 +26,9 @@ public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    @EmbeddedId
+    private PedidoPK pedidoPK;
+
     @ManyToOne
     @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED")
     private Pedido pedido;
@@ -45,18 +46,16 @@ public class ItemPedido implements Serializable {
     private Cfop cfop;
 
     @Column(name = "VLOR_IPE")
-    private BigDecimal valorUnitario;
+    private BigDecimal valorUnitario = BigDecimal.ZERO;
 
     @Column(name = "QTDE_IPE")
-    private Integer quantidade;
+    private Integer quantidade = 1;
 
-    public Pedido getPedido() {
-        return pedido;
-    }
+    @Column(name = " VLDO_IPE")
+    private BigDecimal descontoOferta;
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
+    @Transient
+    private BigDecimal valorTabelaPreco = BigDecimal.ONE;
 
     public Empresa getEmpresa() {
         return empresa;
@@ -97,14 +96,81 @@ public class ItemPedido implements Serializable {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
+
+    public BigDecimal getValorTabelaPreco() {
+        return valorTabelaPreco;
+    }
+
+    public void setValorTabelaPreco(BigDecimal valorTabelaPreco) {
+        this.valorTabelaPreco = valorTabelaPreco;
+    }
+
+    public BigDecimal getDescontoOferta() {
+        return descontoOferta = this.getValorTabelaPreco().subtract(this.valorUnitario);
+    }
+
+    public void setDescontoOferta(BigDecimal descontoOferta) {
+        this.descontoOferta = descontoOferta;
+    }
+
+    public PedidoPK getPedidoPK() {
+        return pedidoPK;
+    }
+
+    public void setPedidoPK(PedidoPK pedidoPK) {
+        this.pedidoPK = pedidoPK;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+ 
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.pedidoPK);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ItemPedido other = (ItemPedido) obj;
+        if (!Objects.equals(this.pedidoPK, other.pedidoPK)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Transient
+    public BigDecimal getValorTotalProdutos() {
+        return this.getDescontoOferta().multiply(new BigDecimal(this.getQuantidade())).add(this.valorUnitario);
+    }
 
     @Transient
     public BigDecimal getValorTotal() {
 
         return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
-        
+
+    }
+
+    @Transient
+    public boolean isProdutoAssociado() {
+        return this.getProduto() != null && this.getProduto().getCodigo() != null;
     }
 
 }
