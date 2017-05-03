@@ -40,13 +40,13 @@
 
         </p:autoComplete>
 
-        <p:outputLabel value="Valor de desconto" for="valorDesconto"/>
+       <p:outputLabel value="Valor de desconto" for="valorDesconto"/>
         <p:inputText id="valorDesconto" size="10" maxlength="10" styleClass="moeda" 
                      value="#{cadastroPedidoBean.pedido.valorTotalDesconto}">
-            <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-
-            <p:ajax event="blur" process="@this" update="totalPedido"
-                    listener="#{cadastroPedidoBean.recalcularPedido}" />
+        	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+        	
+        	<p:ajax event="blur" process="@this" update="totalPedido"
+        		listener="#{cadastroPedidoBean.recalcularPedido}" />
         </p:inputText>
 
         <p:outputLabel value="CFOP" for="cfop"/>
@@ -62,10 +62,8 @@
 
 
 
-        <p:outputLabel value="Total dos Produtos" style="font-weight: bold; font-size: 1.1em"/>
-        <h:outputText value="#{cadastroPedidoBean.pedido.valorTotalProdutos}" style="font-weight: bold; font-size: 1.1em" id="totalProdutos">
-            <f:convertNumber type="currency"/>
-        </h:outputText>
+        <p:outputLabel value="Total dos Produtos" style="font-weight: bold"/>
+        <h:outputText value="R$ 0,00" style="font-weight: bold" id="subtotal" />
 
         <p:outputLabel value="Ciclo" for="ciclo"/>
         <p:selectOneMenu id="ciclo" value="#{cadastroPedidoBean.pedido.ciclo}">

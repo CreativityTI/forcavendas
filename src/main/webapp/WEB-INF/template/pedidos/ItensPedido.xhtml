@@ -1,67 +1,36 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
 
-    <p:dataTable var="item" id="tabelaItens" value="#{cadastroPedidoBean.pedido.itens}">
-        <p:column headerText="Código" style="text-align: center; width: 100px">
-            <h:outputText value="#{item.produto.codigo}" rendered="#{item.produtoAssociado}"/>
-        </p:column>
-        <p:column headerText="Produto">
-            <h:outputText value="#{item.produto.descricao}" rendered="#{item.produtoAssociado}"/>
-            <p:autoComplete styleClass="produto-tabela"
-                            value="#{cadastroPedidoBean.produtoLinhaEditavel}"
-                            var="produto"
-                            itemLabel="#{produto.descricao}"
-                            itemValue="#{produto}"
-                            rendered="#{not item.produtoAssociado}"
-                            completeMethod="#{cadastroPedidoBean.completarProduto}"
-                            forceSelection="true"
-                            minQueryLength="3"
-                            maxResults="5">
-                <p:ajax event="itemSelect" update="tabelaItens frmCadastro:totalPedido frmCadastro:totalProdutos"
-                        listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>
-            </p:autoComplete>
-        </p:column>
-
-        <p:column headerText="Valor Tabela de Preço" style="text-align: right; width: 120px">
-            <h:outputText value="#{item.valorTabelaPreco}">
-                <f:convertNumber type="currency"/>
-            </h:outputText> 
-        </p:column>
-
-
-        <p:column headerText="Valor unitário" style="text-align: right; width: 120px">
-            <h:outputText value="#{item.valorUnitario}">
-                <f:convertNumber type="currency"/>
-            </h:outputText> 
-        </p:column>
-        
-             <p:column headerText="Desconto Oferta" style="text-align: center; width: 100px">
-                 <h:outputText value="#{item.descontoOferta}">
-                <f:convertNumber type="currency"/>
-            </h:outputText> 
-        </p:column>
-
-        <p:column headerText="Quantidade" style="text-align: center; width: 100px">
-            <p:inputText size="8" value="#{item.quantidade}" />
-        </p:column>
-        <p:column headerText="Estoque" style="text-align: center; width: 100px">
-            <h:outputText value="0" />
-        </p:column>
-        <p:column headerText="Valor total" style="text-align: right; width: 100px">
-            <h:outputText value="#{item.valorTotal}">
-                <f:convertNumber type="currency"/>
-            </h:outputText>
-        </p:column>
-
-        <p:columnGroup type="footer">
-            <p:row>
-                <p:column colspan="7" footerText="Subtotal" style="text-align: right" />
-                <p:column footerText="R$ 0,00" style="text-align: right" />
-            </p:row>
-        </p:columnGroup>
-    </p:dataTable>
-
+	<p:dataTable var="item" id="tabelaItens">
+		<p:column headerText="Código" style="text-align: center; width: 100px">
+			<p:inputText size="8" />
+		</p:column>
+		<p:column headerText="Produto">
+			<p:autoComplete styleClass="produto-tabela" />
+		</p:column>
+		<p:column headerText="Valor unitário" style="text-align: right; width: 120px">
+			<h:outputText value="R$ 0,00" />
+		</p:column>
+            
+		<p:column headerText="Quantidade" style="text-align: center; width: 100px">
+			<p:inputText size="8" value="1" />
+		</p:column>
+		<p:column headerText="Estoque" style="text-align: center; width: 100px">
+			<h:outputText value="0" />
+		</p:column>
+		<p:column headerText="Valor total" style="text-align: right; width: 100px">
+			<h:outputText value="R$ 0,00"/>
+		</p:column>
+		
+		<p:columnGroup type="footer">
+			<p:row>
+				<p:column colspan="5" footerText="Subtotal" style="text-align: right" />
+				<p:column footerText="R$ 0,00" style="text-align: right" />
+			</p:row>
+		</p:columnGroup>
+	</p:dataTable>
+  	
 </ui:composition>
