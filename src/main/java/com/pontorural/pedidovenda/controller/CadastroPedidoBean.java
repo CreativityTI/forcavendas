@@ -92,6 +92,7 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
+        this.pedido.adicionarItemVazio();
         if (FacesUtil.isNotPostback()) {
             this.operacoes = this.repositoryOperacoes.todasOperacoes();
             this.ciclos = this.repositoryCiclos.todosCiclos();
@@ -138,8 +139,8 @@ public class CadastroPedidoBean implements Serializable {
         pedido = new Pedido();
 
     }
-    
-    public void recalcularPedido(){
+
+    public void recalcularPedido() {
         this.pedido.recalcularValorTotal();
     }
 

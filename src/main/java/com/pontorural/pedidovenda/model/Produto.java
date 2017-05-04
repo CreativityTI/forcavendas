@@ -38,7 +38,18 @@ public class Produto implements Serializable {
 	@Transient
 	private BigDecimal valor = BigDecimal.ONE;
 	
+        @Transient
+        private Integer quantidadeEstoque;
 
+    public Integer getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
+    }
+
+ 
 
 	public String getCodigo() {
 		return codigo;
