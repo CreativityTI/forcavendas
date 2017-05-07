@@ -1,35 +1,75 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:dataTable value="#{cadastroPedidoBean.pedido.itens}" var="item" id="tabelaItens">
-		<p:column headerText="Código" style="text-align: center; width: 100px">
-			<p:inputText size="8" />
-		</p:column>
-		<p:column headerText="Produto">
-			<p:autoComplete styleClass="produto-tabela" />
-		</p:column>
-		<p:column headerText="Valor unitário" style="text-align: right; width: 120px">
-			<h:outputText value="R$ 0,00" />
-		</p:column>
-            
-		<p:column headerText="Quantidade" style="text-align: center; width: 100px">
-			<p:inputText size="8" value="1" />
-		</p:column>
-		<p:column headerText="Estoque" style="text-align: center; width: 100px">
-			<h:outputText value="0" />
-		</p:column>
-		<p:column headerText="Valor total" style="text-align: right; width: 100px">
-			<h:outputText value="R$ 0,00"/>
-		</p:column>
-		
-		<p:columnGroup type="footer">
-			<p:row>
-				<p:column colspan="5" footerText="Subtotal" style="text-align: right" />
-				<p:column footerText="R$ 0,00" style="text-align: right" />
-			</p:row>
-		</p:columnGroup>
-	</p:dataTable>
-  	
+        <p:column style="width:16px">
+            <p:rowToggler />
+        </p:column>
+        <p:column headerText="Código" style="text-align: center; width: 100px">
+            <h:outputText value="#{item.produto.codigo}" />
+        </p:column>
+        <p:column headerText="Produto">
+            <h:outputText value="#{item.produto.descricao}" />
+        </p:column>
+        <p:column headerText="Valor unitário" style="text-align: right; width: 120px">
+            <h:outputText value="#{item.valorUnitario}">
+                <f:convertNumber type="currency"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column headerText="Quantidade" style="text-align: center; width: 100px">
+            <h:outputText value="#{item.quantidade}" >
+                <f:convertNumber type="number" />
+            </h:outputText>
+        </p:column>
+        <p:column headerText="Estoque" style="text-align: center; width: 100px">
+            <h:outputText value="0" />
+        </p:column>
+        <p:column headerText="Valor total" style="text-align: right; width: 100px">
+            <h:outputText value="#{item.valorTotalItem}">
+                <f:convertNumber type="currency"/>
+            </h:outputText>
+        </p:column>
+
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column colspan="5" footerText="Subtotal" style="text-align: right" />
+                <p:column style="text-align: right">
+                    <f:facet name="footer">
+                        <h:outputText value="#{cadastroPedidoBean.pedido.valorTotalPedido}">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+            </p:row>
+        </p:columnGroup>
+
+        <p:rowExpansion>
+            <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">            
+
+                <h:outputText value="Venda:" />
+                <h:outputText value="#{item.valorTotalItem}">
+                    <f:convertNumber type="currency"/>
+                </h:outputText>
+
+                <h:outputText value="Custo" />
+                <h:outputText value="#{item.valorTotalCustoItem}">
+                           <f:convertNumber type="currency"/>
+                </h:outputText>
+
+                <h:outputText value="Margem:" />
+                <h:outputText value="#{item.margemItem}">
+                    <f:convertNumber type="number" pattern="0.000"/>
+                </h:outputText>
+
+            </p:panelGrid>
+        </p:rowExpansion>
+
+
+    </p:dataTable>
+
+
 </ui:composition>

@@ -7,7 +7,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.0.20:1521:dbtest" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@168.205.190.13:3000:orcl" />
 			<property name="javax.persistence.jdbc.user" value="pontorural" />
 			<property name="javax.persistence.jdbc.password" value="masterkey" />
 			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />

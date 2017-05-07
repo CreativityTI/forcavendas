@@ -7,6 +7,7 @@ package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -42,10 +43,13 @@ public class ItemPedido implements Serializable {
     private Date emissao;
 
     @Column(name = "QTDE_IPE")
-    private Integer quantidade;
+    private Double quantidade;
 
-    @Column(name = "VLDO_IPE")
+    @Column(name = "VLOR_IPE")
     private BigDecimal valorUnitario;
+
+    @Column(name = "CGFI_IPE")
+    private BigDecimal valorCutoGerFinanceiro;
 
     @JoinColumns({
         @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP", insertable = false, updatable = false)
@@ -74,11 +78,11 @@ public class ItemPedido implements Serializable {
         this.emissao = emissao;
     }
 
-    public Integer getQuantidade() {
+    public Double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Integer quantidade) {
+    public void setQuantidade(Double quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -133,9 +137,34 @@ public class ItemPedido implements Serializable {
 
     }
 
+    public BigDecimal getValorCutoGerFinanceiro() {
+        return valorCutoGerFinanceiro;
+    }
+
+    public void setValorCutoGerFinanceiro(BigDecimal valorCutoGerFinanceiro) {
+        this.valorCutoGerFinanceiro = valorCutoGerFinanceiro;
+    }
+
     @Transient
     public BigDecimal getValorTotal() {
         return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+
+    }
+
+    @Transient
+    public BigDecimal getValorTotalItem() {
+        return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+    }
+
+    @Transient
+    public BigDecimal getValorTotalCustoItem() {
+        return this.getValorCutoGerFinanceiro().multiply(new BigDecimal(this.getQuantidade()));
+    }
+
+    @Transient
+    public BigDecimal getMargemItem() {
+        BigDecimal resultado = valorUnitario.subtract(valorCutoGerFinanceiro);
+        return resultado.divide(valorUnitario, 0).multiply(new BigDecimal(100));
 
     }
 

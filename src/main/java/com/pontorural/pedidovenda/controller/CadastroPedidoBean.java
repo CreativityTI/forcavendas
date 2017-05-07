@@ -9,6 +9,7 @@ import com.pontorural.pedidovenda.model.Cfop;
 import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.model.Condicao;
 import com.pontorural.pedidovenda.model.Empresa;
+import com.pontorural.pedidovenda.model.ItemPedido;
 import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
@@ -42,10 +43,14 @@ public class CadastroPedidoBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Pedido pedido;
+    
+    private ItemPedido itemSelecionado;
 
     private Operacao operacao;
 
     private Parceiro parceiro;
+    
+    
 
     @Inject
     private Operacoes repositoryOperacoes;
@@ -92,7 +97,7 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
-        this.pedido.adicionarItemVazio();
+     
         if (FacesUtil.isNotPostback()) {
             this.operacoes = this.repositoryOperacoes.todasOperacoes();
             this.ciclos = this.repositoryCiclos.todosCiclos();
@@ -240,5 +245,15 @@ public class CadastroPedidoBean implements Serializable {
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
     }
+
+    public ItemPedido getItemSelecionado() {
+        return itemSelecionado;
+    }
+
+    public void setItemSelecionado(ItemPedido itemSelecionado) {
+        this.itemSelecionado = itemSelecionado;
+    }
+    
+    
 
 }
