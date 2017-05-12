@@ -286,7 +286,7 @@ public class Pedido implements Serializable {
 
     public void recalcularValorTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        total = total.add(getValorTotalPedido().subtract(getValorTotalDesconto()));
+        //total = total.add(getValorTotalPedido().subtract(getValorTotalDesconto()));
         for (ItemPedido item : this.getItens()) {
             if (item.getProduto() != null && item.getProduto().getCodigo() != null) {
                 total = total.add(item.getValorTotal());
