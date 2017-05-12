@@ -29,55 +29,53 @@
         </p:column>
 
         <p:column headerText="Quantidade" style="text-align: center; width: 100px">
-            <h:outputText value="#{item.quantidade}" >
-                <f:convertNumber type="number" />
-            </h:outputText>
-        </p:column>
-        <p:column headerText="Estoque" style="text-align: center; width: 100px">
-            <h:outputText value="0" />
-        </p:column>
-        <p:column headerText="Valor total" style="text-align: right; width: 100px">
+            <p:inputText value="#{item.quantidade}"/>           
+    </p:column>
+    <p:column headerText="Estoque" style="text-align: center; width: 100px">
+        <h:outputText value="0" />
+    </p:column>
+    <p:column headerText="Valor total" style="text-align: right; width: 100px">
+        <h:outputText value="#{item.valorTotalItem}">
+            <f:convertNumber type="currency"/>
+        </h:outputText>
+    </p:column>
+
+    <p:columnGroup type="footer">
+        <p:row>
+            <p:column colspan="6" footerText="Subtotal" style="text-align: right" />
+            <p:column style="text-align: right">
+                <f:facet name="footer">
+                    <h:outputText value="#{cadastroPedidoBean.pedido.valorTotalPedido}">
+                        <f:convertNumber type="currency"/>
+                    </h:outputText>
+                </f:facet>
+            </p:column>
+        </p:row>
+    </p:columnGroup>
+
+    <p:rowExpansion>
+        <p:panelGrid  columns="6" columnClasses="label,value">            
+
+            <h:outputText value="Venda:" />
             <h:outputText value="#{item.valorTotalItem}">
                 <f:convertNumber type="currency"/>
             </h:outputText>
-        </p:column>
 
-        <p:columnGroup type="footer">
-            <p:row>
-                <p:column colspan="5" footerText="Subtotal" style="text-align: right" />
-                <p:column style="text-align: right">
-                    <f:facet name="footer">
-                        <h:outputText value="#{cadastroPedidoBean.pedido.valorTotalPedido}">
-                            <f:convertNumber type="currency"/>
-                        </h:outputText>
-                    </f:facet>
-                </p:column>
-            </p:row>
-        </p:columnGroup>
+            <h:outputText value="Custo" />
+            <h:outputText value="#{item.valorTotalCustoItem}">
+                <f:convertNumber type="currency"/>
+            </h:outputText>
 
-        <p:rowExpansion>
-            <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">            
+            <h:outputText value="Margem:" />
+            <h:outputText value="#{item.margemItem}">
+                <f:convertNumber type="number" pattern="0.000"/>
+            </h:outputText>
 
-                <h:outputText value="Venda:" />
-                <h:outputText value="#{item.valorTotalItem}">
-                    <f:convertNumber type="currency"/>
-                </h:outputText>
-
-                <h:outputText value="Custo" />
-                <h:outputText value="#{item.valorTotalCustoItem}">
-                    <f:convertNumber type="currency"/>
-                </h:outputText>
-
-                <h:outputText value="Margem:" />
-                <h:outputText value="#{item.margemItem}">
-                    <f:convertNumber type="number" pattern="0.000"/>
-                </h:outputText>
-
-            </p:panelGrid>
-        </p:rowExpansion>
+        </p:panelGrid>
+    </p:rowExpansion>
 
 
-    </p:dataTable>
+</p:dataTable>
 
 
 </ui:composition>

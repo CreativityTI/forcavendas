@@ -284,8 +284,6 @@ public class Pedido implements Serializable {
         return true;
     }
 
-  
-
     public void recalcularValorTotal() {
         BigDecimal total = BigDecimal.ZERO;
         total = total.add(getValorTotalPedido().subtract(getValorTotalDesconto()));
@@ -301,7 +299,6 @@ public class Pedido implements Serializable {
 
     public void adicionarItemVazio() {
         Produto produto = new Produto();
-        produto.setQuantidadeEstoque(1);
 
         ItemPedido item = new ItemPedido();
         item.setProduto(produto);
