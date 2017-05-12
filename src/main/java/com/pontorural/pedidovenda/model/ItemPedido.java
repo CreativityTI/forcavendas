@@ -167,5 +167,10 @@ public class ItemPedido implements Serializable {
         return resultado.divide(valorUnitario, 0).multiply(new BigDecimal(100));
 
     }
+    
+    	@Transient
+	public boolean isProdutoAssociado() {
+		return this.getProduto() != null && this.getProduto().getCodigo()!= null;
+	}
 
 }
