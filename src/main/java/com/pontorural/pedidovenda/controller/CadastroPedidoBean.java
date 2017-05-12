@@ -14,6 +14,7 @@ import com.pontorural.pedidovenda.model.Operacao;
 import com.pontorural.pedidovenda.model.Parceiro;
 import com.pontorural.pedidovenda.model.Pedido;
 import com.pontorural.pedidovenda.model.Pessoal;
+import com.pontorural.pedidovenda.model.Produto;
 import com.pontorural.pedidovenda.model.Propriedade;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Ciclos;
@@ -22,6 +23,7 @@ import com.pontorural.pedidovenda.repository.Empresas;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import com.pontorural.pedidovenda.repository.Parceiros;
 import com.pontorural.pedidovenda.repository.Pessoas;
+import com.pontorural.pedidovenda.repository.Produtos;
 import com.pontorural.pedidovenda.repository.Propriedades;
 import com.pontorural.pedidovenda.service.CadastroPedidoService;
 import com.pontorural.pedidovenda.util.jsf.FacesUtil;
@@ -43,14 +45,12 @@ public class CadastroPedidoBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Pedido pedido;
-    
+
     private ItemPedido itemSelecionado;
 
     private Operacao operacao;
 
     private Parceiro parceiro;
-    
-    
 
     @Inject
     private Operacoes repositoryOperacoes;
@@ -76,6 +76,9 @@ public class CadastroPedidoBean implements Serializable {
     @Inject
     private Empresas repositoryEmpresas;
 
+    @Inject
+    private Produtos produtos;
+
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
     private List<Ciclo> ciclos;
@@ -88,6 +91,10 @@ public class CadastroPedidoBean implements Serializable {
     @Inject
     private CadastroPedidoService cadastroPedidoService;
 
+    private Produto produtoLinhaEditavel;
+
+    String codigo;
+
     public CadastroPedidoBean() {
         limpar();
 
@@ -97,7 +104,8 @@ public class CadastroPedidoBean implements Serializable {
         if (this.pedido == null) {
             limpar();
         }
-     
+        this.pedido.adicionarItemVazio();
+        
         if (FacesUtil.isNotPostback()) {
             this.operacoes = this.repositoryOperacoes.todasOperacoes();
             this.ciclos = this.repositoryCiclos.todosCiclos();
@@ -114,12 +122,49 @@ public class CadastroPedidoBean implements Serializable {
         }
     }
 
+    public void carregarProdutoLinhaEditavel() {
+        ItemPedido item = this.pedido.getItens().get(0);
+
+        if (this.produtoLinhaEditavel != null) {
+            if (this.existeItemComProduto(this.produtoLinhaEditavel)) {
+                FacesUtil.addErrorMessage("Já existe um item no pedido com o produto informado.");
+            } else {
+                item.setProduto(this.produtoLinhaEditavel);
+                item.setValorUnitario(this.produtoLinhaEditavel.getValor());
+
+                this.pedido.adicionarItemVazio();
+                this.produtoLinhaEditavel = null;
+                this.codigo = null;
+
+                this.pedido.recalcularValorTotal();
+            }
+        }
+    }
+
+    private boolean existeItemComProduto(Produto produto) {
+        boolean existeItem = false;
+
+        for (ItemPedido item : this.getPedido().getItens()) {
+            if (produto.equals(item.getProduto())) {
+                existeItem = true;
+                break;
+            }
+        }
+
+        return existeItem;
+    }
+
     public List<Parceiro> completarCliente(String nome) {
         return this.repositoryParceiros.porNome(nome);
     }
 
     public List<Pessoal> completarConsultor(String nome) {
         return this.respositoryPessoas.porNome(nome);
+    }
+
+    public List<Produto> completarProduto(String descricao) {
+        return this.produtos.porDescricao(descricao);
+
     }
 
     public void carregarCfops() {
@@ -253,7 +298,13 @@ public class CadastroPedidoBean implements Serializable {
     public void setItemSelecionado(ItemPedido itemSelecionado) {
         this.itemSelecionado = itemSelecionado;
     }
-    
-    
+
+    public Produto getProdutoLinhaEditavel() {
+        return produtoLinhaEditavel;
+    }
+
+    public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
+        this.produtoLinhaEditavel = produtoLinhaEditavel;
+    }
 
 }

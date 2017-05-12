@@ -43,10 +43,10 @@ public class ItemPedido implements Serializable {
     private Date emissao;
 
     @Column(name = "QTDE_IPE")
-    private Double quantidade;
+    private Double quantidade = Double.valueOf(1);
 
     @Column(name = "VLOR_IPE")
-    private BigDecimal valorUnitario;
+    private BigDecimal valorUnitario = BigDecimal.ZERO;
 
     @Column(name = "CGFI_IPE")
     private BigDecimal valorCutoGerFinanceiro;
