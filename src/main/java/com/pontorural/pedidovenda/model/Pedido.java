@@ -307,4 +307,16 @@ public class Pedido implements Serializable {
 
     }
 
+    public void removerItemVazio() {
+        ItemPedido primeiroItem = this.getItens().get(0);
+        if (primeiroItem != null && primeiroItem.getProduto().getCodigo() == null) {
+            this.getItens().remove(0);
+        }
+    }
+
+    @Transient
+    public boolean isValorTotalNegativo() {
+        return this.getValorTotalPedido().compareTo(BigDecimal.ZERO) < 0;
+    }
+
 }
