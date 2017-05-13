@@ -7,13 +7,11 @@ package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -61,6 +59,10 @@ public class ItemPedido implements Serializable {
     @JoinColumn(name = "CODI_PSV", referencedColumnName = "CODI_PSV", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produto produto;
+
+    @JoinColumn(name = "CCFO_CFO", referencedColumnName = "CCFO_CFO")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cfop cfop;
 
     public ItemPedidoPK getItemPedidoPK() {
         return itemPedidoPK;
@@ -110,6 +112,17 @@ public class ItemPedido implements Serializable {
         this.produto = produto;
 
     }
+
+    public Cfop getCfop() {
+        return cfop;
+    }
+
+    public void setCfop(Cfop cfop) {
+        this.cfop = cfop;
+    }
+    
+    
+    
 
     @Override
     public int hashCode() {

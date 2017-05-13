@@ -46,7 +46,7 @@ public class CadastroPedidoBean implements Serializable {
 
     private Pedido pedido;
 
-    private ItemPedido itemSelecionado;
+    private ItemPedido itemPedido;
 
     private Operacao operacao;
 
@@ -192,15 +192,15 @@ public class CadastroPedidoBean implements Serializable {
 
     public void salvar() {
         this.pedido.removerItemVazio();
-        
-        try {
 
+        try {
+         
             this.pedido = this.cadastroPedidoService.salvar(pedido);
 
             FacesUtil.addInfoMessage("Pedido saldo com sucesso!");
-       
+
         } finally {
-            
+
             this.pedido.adicionarItemVazio();
         }
 
@@ -313,12 +313,12 @@ public class CadastroPedidoBean implements Serializable {
         this.empresas = empresas;
     }
 
-    public ItemPedido getItemSelecionado() {
-        return itemSelecionado;
+    public ItemPedido getItemPedido() {
+        return itemPedido;
     }
 
-    public void setItemSelecionado(ItemPedido itemSelecionado) {
-        this.itemSelecionado = itemSelecionado;
+    public void setItemPedido(ItemPedido itemPedido) {
+        this.itemPedido = itemPedido;
     }
 
     public Produto getProdutoLinhaEditavel() {
