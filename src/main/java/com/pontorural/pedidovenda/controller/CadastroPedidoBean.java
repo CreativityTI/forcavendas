@@ -192,8 +192,11 @@ public class CadastroPedidoBean implements Serializable {
 
     public void salvar() {
         this.pedido.removerItemVazio();
+        
+        
 
         try {
+            
        
             this.pedido = this.cadastroPedidoService.salvar(pedido);
 

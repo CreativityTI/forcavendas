@@ -301,7 +301,7 @@ public class Pedido implements Serializable {
 
     public void adicionarItemVazio() {
         Produto produto = new Produto();
-     
+
         ItemPedido item = new ItemPedido();
         item.setProduto(produto);
         item.setPedido(this);
