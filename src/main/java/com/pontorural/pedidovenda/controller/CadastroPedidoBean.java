@@ -194,7 +194,7 @@ public class CadastroPedidoBean implements Serializable {
         this.pedido.removerItemVazio();
 
         try {
-         
+       
             this.pedido = this.cadastroPedidoService.salvar(pedido);
 
             FacesUtil.addInfoMessage("Pedido saldo com sucesso!");

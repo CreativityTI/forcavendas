@@ -9,9 +9,24 @@
         <p:column style="width:16px">
             <p:rowToggler />
         </p:column>
+        <p:column headerText="Empresa" style="text-align: center;">
+            <p:inputText value="#{item.empresa}" />
+        </p:column>
+
+        <p:column headerText="Serie" style="text-align: center;">
+            <p:inputText value="#{item.serie}" />
+        </p:column>
+
+        <p:column headerText="CFOP" style="text-align: center;">
+            <p:inputText value="#{item.cfop}" />
+        </p:column>
+
         <p:column headerText="Código" style="text-align: center; width: 100px">
             <h:outputText value="#{item.produto.codigo}" />
         </p:column>
+
+
+
         <p:column headerText="Produto">
             <h:outputText value="#{item.produto.descricao}" rendered="#{item.produtoAssociado}" />
 

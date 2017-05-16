@@ -8,15 +8,13 @@ package com.pontorural.pedidovenda.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumns;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,12 +31,12 @@ public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    protected ItemPedidoPK itemPedidoPK;
-
     @Column(name = "DEMI_PED")
     @Temporal(TemporalType.DATE)
     private Date emissao;
+
+    @Column(name = "SERI_PED")
+    private String serie;
 
     @Column(name = "QTDE_IPE")
     private Double quantidade = Double.valueOf(1);
@@ -49,28 +47,22 @@ public class ItemPedido implements Serializable {
     @Column(name = "CGFI_IPE")
     private BigDecimal valorCutoGerFinanceiro;
 
-    @JoinColumns({
-        @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP", insertable = false, updatable = false)
-        , @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED", insertable = false, updatable = false)
-        , @JoinColumn(name = "SERI_PED", referencedColumnName = "SERI_PED", insertable = false, updatable = false)})
+    @Id
+    @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pedido pedido;
 
-    @JoinColumn(name = "CODI_PSV", referencedColumnName = "CODI_PSV", insertable = false, updatable = false)
+    @JoinColumn(name = "CODI_EMP", referencedColumnName = "CODI_EMP")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Empresa empresa;
+
+    @JoinColumn(name = "CODI_PSV", referencedColumnName = "CODI_PSV")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produto produto;
 
     @JoinColumn(name = "CCFO_CFO", referencedColumnName = "CCFO_CFO")
     @ManyToOne(fetch = FetchType.LAZY)
     private Cfop cfop;
-
-    public ItemPedidoPK getItemPedidoPK() {
-        return itemPedidoPK;
-    }
-
-    public void setItemPedidoPK(ItemPedidoPK itemPedidoPK) {
-        this.itemPedidoPK = itemPedidoPK;
-    }
 
     public Date getEmissao() {
         return emissao;
@@ -120,35 +112,25 @@ public class ItemPedido implements Serializable {
     public void setCfop(Cfop cfop) {
         this.cfop = cfop;
     }
-    
-    
-    
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.itemPedidoPK);
-        return hash;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ItemPedido other = (ItemPedido) obj;
-        if (!Objects.equals(this.itemPedidoPK, other.itemPedidoPK)) {
-            return false;
-        }
-        return true;
-
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+    
+    
+    
 
     public BigDecimal getValorCutoGerFinanceiro() {
         return valorCutoGerFinanceiro;
@@ -185,5 +167,8 @@ public class ItemPedido implements Serializable {
     public boolean isProdutoAssociado() {
         return this.getProduto() != null && this.getProduto().getCodigo() != null;
     }
+    
+    
+    
 
 }

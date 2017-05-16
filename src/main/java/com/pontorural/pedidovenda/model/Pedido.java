@@ -106,7 +106,7 @@ public class Pedido implements Serializable {
     @Column(name = "TFAT_PED")
     private String tipoFaturamento;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ItemPedido> itens = new ArrayList<>();
 
     public Empresa getEmpresa() {
@@ -301,7 +301,7 @@ public class Pedido implements Serializable {
 
     public void adicionarItemVazio() {
         Produto produto = new Produto();
-
+     
         ItemPedido item = new ItemPedido();
         item.setProduto(produto);
         item.setPedido(this);
