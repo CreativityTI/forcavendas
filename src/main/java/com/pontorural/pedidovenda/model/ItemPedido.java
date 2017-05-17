@@ -8,12 +8,14 @@ package com.pontorural.pedidovenda.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,6 +33,11 @@ public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "PB2B_IPE")
+    private Integer id;
+
     @Column(name = "DEMI_PED")
     @Temporal(TemporalType.DATE)
     private Date emissao;
@@ -47,7 +54,6 @@ public class ItemPedido implements Serializable {
     @Column(name = "CGFI_IPE")
     private BigDecimal valorCutoGerFinanceiro;
 
-    @Id
     @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pedido pedido;
@@ -67,6 +73,16 @@ public class ItemPedido implements Serializable {
     public Date getEmissao() {
         return emissao;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    
 
     public void setEmissao(Date emissao) {
         this.emissao = emissao;
@@ -128,9 +144,6 @@ public class ItemPedido implements Serializable {
     public void setSerie(String serie) {
         this.serie = serie;
     }
-    
-    
-    
 
     public BigDecimal getValorCutoGerFinanceiro() {
         return valorCutoGerFinanceiro;
@@ -139,6 +152,8 @@ public class ItemPedido implements Serializable {
     public void setValorCutoGerFinanceiro(BigDecimal valorCutoGerFinanceiro) {
         this.valorCutoGerFinanceiro = valorCutoGerFinanceiro;
     }
+
+ 
 
     @Transient
     public BigDecimal getValorTotal() {
@@ -167,8 +182,30 @@ public class ItemPedido implements Serializable {
     public boolean isProdutoAssociado() {
         return this.getProduto() != null && this.getProduto().getCodigo() != null;
     }
-    
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ItemPedido other = (ItemPedido) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
 
 }

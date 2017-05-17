@@ -41,44 +41,44 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class CadastroPedidoBean implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     private Pedido pedido;
-
+    
     private ItemPedido itemPedido;
-
+    
     private Operacao operacao;
-
+    
     private Parceiro parceiro;
-
+    
     @Inject
     private Operacoes repositoryOperacoes;
-
+    
     @Inject
     private Cfops repositoryCfops;
-
+    
     @Inject
     private Ciclos repositoryCiclos;
-
+    
     @Inject
     private Condicoes repositoryCondicoes;
-
+    
     @Inject
     private Parceiros repositoryParceiros;
-
+    
     @Inject
     private Propriedades repositoryPropriedades;
-
+    
     @Inject
     private Pessoas respositoryPessoas;
-
+    
     @Inject
     private Empresas repositoryEmpresas;
-
+    
     @Inject
     private Produtos produtos;
-
+    
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
     private List<Ciclo> ciclos;
@@ -87,26 +87,26 @@ public class CadastroPedidoBean implements Serializable {
     private List<Propriedade> propriedades;
     private List<Pessoal> pessoas;
     private List<Empresa> empresas;
-
+    
     @Inject
     private CadastroPedidoService cadastroPedidoService;
-
+    
     private Produto produtoLinhaEditavel;
-
+    
     String codigo;
-
+    
     public CadastroPedidoBean() {
         limpar();
-
+        
     }
-
+    
     public void inicializar() {
         if (this.pedido == null) {
             limpar();
-
+            
             this.pedido.adicionarItemVazio();
         }
-
+        
         if (FacesUtil.isNotPostback()) {
             this.operacoes = this.repositoryOperacoes.todasOperacoes();
             this.ciclos = this.repositoryCiclos.todosCiclos();
@@ -114,47 +114,47 @@ public class CadastroPedidoBean implements Serializable {
             this.empresas = this.repositoryEmpresas.todasEmpresas();
             if (this.operacao != null) {
                 carregarCfops();
-
+                
             }
-
+            
             if (this.parceiro != null) {
                 carregarPropriedades();
             }
         }
     }
-
+    
     public void carregarProdutoLinhaEditavel() {
         ItemPedido item = this.pedido.getItens().get(0);
-
+        
         if (this.produtoLinhaEditavel != null) {
             if (this.existeItemComProduto(this.produtoLinhaEditavel)) {
                 FacesUtil.addErrorMessage("Já existe um item no pedido com o produto informado.");
             } else {
                 item.setProduto(this.produtoLinhaEditavel);
                 item.setValorUnitario(this.produtoLinhaEditavel.getValor());
-
+                
                 this.pedido.adicionarItemVazio();
                 this.produtoLinhaEditavel = null;
                 this.codigo = null;
-
+                
                 this.pedido.recalcularValorTotal();
             }
         }
     }
-
+    
     private boolean existeItemComProduto(Produto produto) {
         boolean existeItem = false;
-
+        
         for (ItemPedido item : this.getPedido().getItens()) {
             if (produto.equals(item.getProduto())) {
                 existeItem = true;
                 break;
             }
         }
-
+        
         return existeItem;
     }
-
+    
     public void atualizarQuantidade(ItemPedido item, int linha) {
         if (item.getQuantidade() < 1) {
             if (linha == 0) {
@@ -163,173 +163,171 @@ public class CadastroPedidoBean implements Serializable {
                 this.getPedido().getItens().remove(linha);
             }
         }
-
+        
         this.pedido.recalcularValorTotal();
     }
-
+    
     public List<Parceiro> completarCliente(String nome) {
         return this.repositoryParceiros.porNome(nome);
     }
-
+    
     public List<Pessoal> completarConsultor(String nome) {
         return this.respositoryPessoas.porNome(nome);
     }
-
+    
     public List<Produto> completarProduto(String descricao) {
         return this.produtos.porDescricao(descricao);
-
+        
     }
-
+    
     public void carregarCfops() {
-
+        
         cfops = repositoryCfops.todosCFOPSPorOperacao(pedido.getOperacao());
-
+        
     }
-
+    
     public void carregarPropriedades() {
         propriedades = repositoryPropriedades.todasPropriedadesPorParceiro(pedido.getParceiro());
     }
-
+    
     public void salvar() {
         this.pedido.removerItemVazio();
         
-        
-
         try {
+    
             
-       
             this.pedido = this.cadastroPedidoService.salvar(pedido);
-
+            
             FacesUtil.addInfoMessage("Pedido saldo com sucesso!");
-
+            
         } finally {
-
+            
             this.pedido.adicionarItemVazio();
         }
-
+        
     }
-
+    
     private void limpar() {
-
+        
         pedido = new Pedido();
-
+        
     }
-
+    
     public void recalcularPedido() {
         this.pedido.recalcularValorTotal();
     }
-
+    
     public boolean isEditando() {
         return this.pedido.getCodigo() != null;
     }
-
+    
     public Pedido getPedido() {
         return pedido;
     }
-
+    
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
         if (this.pedido != null) {
             this.operacao = this.pedido.getOperacao();
             this.parceiro = this.pedido.getParceiro();
-
+            
         }
     }
-
+    
     public List<Operacao> getOperacoes() {
         return operacoes;
     }
-
+    
     public void setOperacoes(List<Operacao> operacoes) {
         this.operacoes = operacoes;
     }
-
+    
     public List<Cfop> getCfops() {
         return cfops;
     }
-
+    
     public void setCfops(List<Cfop> cfops) {
         this.cfops = cfops;
     }
-
+    
     public Operacao getOperacao() {
         return operacao;
     }
-
+    
     public void setOperacao(Operacao operacao) {
         this.operacao = operacao;
     }
-
+    
     public List<Ciclo> getCiclos() {
         return ciclos;
     }
-
+    
     public void setCiclos(List<Ciclo> ciclos) {
         this.ciclos = ciclos;
     }
-
+    
     public List<Condicao> getCondicoes() {
         return condicoes;
     }
-
+    
     public void setCondicoes(List<Condicao> condicoes) {
         this.condicoes = condicoes;
     }
-
+    
     public Parceiro getParceiro() {
         return parceiro;
     }
-
+    
     public void setParceiro(Parceiro parceiro) {
         this.parceiro = parceiro;
     }
-
+    
     public List<Parceiro> getParceiros() {
         return parceiros;
     }
-
+    
     public void setParceiros(List<Parceiro> parceiros) {
         this.parceiros = parceiros;
     }
-
+    
     public List<Propriedade> getPropriedades() {
         return propriedades;
     }
-
+    
     public void setPropriedades(List<Propriedade> propriedades) {
         this.propriedades = propriedades;
     }
-
+    
     public List<Pessoal> getPessoas() {
         return pessoas;
     }
-
+    
     public void setPessoas(List<Pessoal> pessoas) {
         this.pessoas = pessoas;
     }
-
+    
     public List<Empresa> getEmpresas() {
         return empresas;
     }
-
+    
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
     }
-
+    
     public ItemPedido getItemPedido() {
         return itemPedido;
     }
-
+    
     public void setItemPedido(ItemPedido itemPedido) {
         this.itemPedido = itemPedido;
     }
-
+    
     public Produto getProdutoLinhaEditavel() {
         return produtoLinhaEditavel;
     }
-
+    
     public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
         this.produtoLinhaEditavel = produtoLinhaEditavel;
     }
-
+    
 }

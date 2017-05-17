@@ -31,6 +31,7 @@ public class CadastroPedidoService implements Serializable {
             pedido.setSerie("PE");
             pedido.setFormaPagamento("03");
             pedido.setTipoFaturamento("1");
+            
         }
 
         pedido.recalcularValorTotal();
