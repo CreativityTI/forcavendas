@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,6 +30,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "IPEDIDO")
+
 public class ItemPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,6 +72,10 @@ public class ItemPedido implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Cfop cfop;
 
+    @JoinColumn(name = "TABE_CTA", referencedColumnName = "TABE_CTA")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tabela tabela;
+
     public Date getEmissao() {
         return emissao;
     }
@@ -81,8 +87,6 @@ public class ItemPedido implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    
 
     public void setEmissao(Date emissao) {
         this.emissao = emissao;
@@ -153,7 +157,13 @@ public class ItemPedido implements Serializable {
         this.valorCutoGerFinanceiro = valorCutoGerFinanceiro;
     }
 
- 
+    public Tabela getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(Tabela tabela) {
+        this.tabela = tabela;
+    }
 
     @Transient
     public BigDecimal getValorTotal() {

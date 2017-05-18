@@ -9,7 +9,7 @@
         <p:column style="width:16px">
             <p:rowToggler />
         </p:column>
-    
+
         <p:column headerText="Código" style="text-align: center; width: 100px">
             <h:outputText value="#{item.produto.codigo}" />
         </p:column>
@@ -28,9 +28,11 @@
             </p:autoComplete>
         </p:column>
         <p:column headerText="Valor unitário" style="text-align: right; width: 120px">
-            <h:outputText value="#{item.valorUnitario}">
-                <f:convertNumber type="currency"/>
-            </h:outputText>
+            <p:inputText value="#{item.valorUnitario}">
+                <p:ajax event="change" process="@this"
+                        update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal"
+                        listener="#{cadastroPedidoBean.atualizarValorUnitario(item, linha)}" />
+            </p:inputText>
         </p:column>
 
         <p:column headerText="Quantidade" style="text-align: center; width: 100px">
