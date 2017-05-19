@@ -140,7 +140,7 @@ public class CadastroPedidoBean implements Serializable {
             } else {
                 item.setProduto(this.produtoLinhaEditavel);
                 item.setValorUnitario(this.produtoLinhaEditavel.getValor());
-                this.tabelas = this.repositoryTabelas.todasTabelas();
+                this.tabelas = this.repositoryTabelas.porProduto(this.produtoLinhaEditavel);
                 this.pedido.adicionarItemVazio();
                 this.produtoLinhaEditavel = null;
                 this.codigo = null;

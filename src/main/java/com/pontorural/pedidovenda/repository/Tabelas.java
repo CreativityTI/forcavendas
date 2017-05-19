@@ -33,6 +33,14 @@ public class Tabelas implements Serializable {
 
     }
 
-   
+    public List<Tabela> porProduto(Produto produto) {
+        try {
+            return manager.createQuery("from Tabela where produto = :produto and situacao = 'A'", Tabela.class)
+                    .setParameter("produto", produto)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
 }
