@@ -5,17 +5,19 @@
  */
 package com.pontorural.pedidovenda.repository;
 
+import com.pontorural.pedidovenda.model.Produto;
 import com.pontorural.pedidovenda.model.Tabela;
 import java.io.Serializable;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  *
  * @author Creativity
  */
-public class Tabelas implements Serializable{
+public class Tabelas implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,8 +29,10 @@ public class Tabelas implements Serializable{
     }
 
     public List<Tabela> todasTabelas() {
-        return manager.createQuery("from Tabela where situacao = 'A' )", Tabela.class).getResultList();
+        return manager.createQuery("from Tabela where situacao = 'A'", Tabela.class).getResultList();
 
     }
+
+   
 
 }

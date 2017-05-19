@@ -34,7 +34,7 @@ public class Tabela implements Serializable {
     private BigDecimal valorPrecoVenda;
 
     @Column(name = "SITU_TAB")
-    private String situacao;
+     private Character situacao;
 
     public Integer getTabela() {
         return tabela;
@@ -60,13 +60,15 @@ public class Tabela implements Serializable {
         this.valorPrecoVenda = valorPrecoVenda;
     }
 
-    public String getSituacao() {
+    public Character getSituacao() {
         return situacao;
     }
 
-    public void setSituacao(String situacao) {
+    public void setSituacao(Character situacao) {
         this.situacao = situacao;
     }
+
+
     
     
     

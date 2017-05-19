@@ -21,12 +21,30 @@
 
             <p:autoComplete styleClass="produto-tabela" value="#{cadastroPedidoBean.produtoLinhaEditavel}"
                             completeMethod="#{cadastroPedidoBean.completarProduto}"
-                            var="produto" itemLabel="#{produto.descricao}" itemValue="#{produto}" 
-                            forceSelection="true" rendered="#{not item.produtoAssociado}">
+                            var="produto" 
+                            itemLabel="#{produto.descricao}" 
+                            itemValue="#{produto}" 
+                            forceSelection="true" 
+                            rendered="#{not item.produtoAssociado}"
+                            minQueryLength="3"
+                            maxResults="5"    >
                 <p:ajax event="itemSelect" update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal" 
                         listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>
             </p:autoComplete>
         </p:column>
+
+        <p:column headerText="Tabela">         
+            <p:selectOneMenu id="tabela" value="#{item.tabela}">
+                <f:selectItem itemLabel="Selecione" />
+                <f:selectItems value="#{cadastroPedidoBean.tabelas}" itemLabel="#{tabela.tabela}" var="tabela" 
+                               itemValue="#{tabela}"
+                               />
+
+            </p:selectOneMenu>
+
+        </p:column>
+
+
         <p:column headerText="Valor unitário" style="text-align: right; width: 120px">
             <p:inputText value="#{item.valorUnitario}">
                 <p:ajax event="change" process="@this"
