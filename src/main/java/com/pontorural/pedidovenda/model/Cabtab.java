@@ -7,7 +7,6 @@ package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,7 +24,7 @@ public class Cabtab implements Serializable {
 
     @Id
     @Column(name = "TABE_CTA")
-    private Integer cabTab;
+    private Integer codigo;
 
     @Column(name = "DESC_CTA")
     private String descricao;
@@ -33,13 +32,15 @@ public class Cabtab implements Serializable {
     @Column(name = "SITU_CTA")
     private Character situacao;
 
-    public Integer getCabTab() {
-        return cabTab;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public void setCabTab(Integer cabTab) {
-        this.cabTab = cabTab;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
+
+   
 
     public String getDescricao() {
         return descricao;
@@ -56,13 +57,11 @@ public class Cabtab implements Serializable {
     public void setSituacao(Character situacao) {
         this.situacao = situacao;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + Objects.hashCode(this.cabTab);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.codigo);
         return hash;
     }
 
@@ -78,10 +77,11 @@ public class Cabtab implements Serializable {
             return false;
         }
         final Cabtab other = (Cabtab) obj;
-        if (!Objects.equals(this.cabTab, other.cabTab)) {
+        if (!Objects.equals(this.codigo, other.codigo)) {
             return false;
         }
         return true;
     }
-
+    
+    
 }

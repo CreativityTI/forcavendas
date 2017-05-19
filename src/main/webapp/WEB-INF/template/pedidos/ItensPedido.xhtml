@@ -34,9 +34,9 @@
         </p:column>
 
         <p:column headerText="Tabela">         
-            <p:selectOneMenu id="tabela" value="#{item.tabela}">
+            <p:selectOneMenu id="tabela" value="#{item.tabela}" >
                 <f:selectItem itemLabel="Selecione" />
-                <f:selectItems value="#{cadastroPedidoBean.tabelas}" itemLabel="#{tabela.cabtab.descricao}" var="tabela" 
+                <f:selectItems value="#{cadastroPedidoBean.tabelas}" itemLabel="#{tabela.tabela}" var="tabela" 
                                itemValue="#{tabela}"
                                />
 
@@ -71,7 +71,7 @@
 
         <p:columnGroup type="footer">
             <p:row>
-                <p:column colspan="6" footerText="Subtotal" style="text-align: right" />
+                <p:column colspan="7" footerText="Subtotal" style="text-align: right" />
                 <p:column style="text-align: right">
                     <f:facet name="footer">
                         <h:outputText value="#{cadastroPedidoBean.pedido.valorTotalPedido}">
