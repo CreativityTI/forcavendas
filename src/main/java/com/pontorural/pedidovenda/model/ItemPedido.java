@@ -64,6 +64,13 @@ public class ItemPedido implements Serializable {
 
     @Column(name = "PVTB_IPE")
     private BigDecimal valorPrecoTabFinanVencimento;
+    
+    @Column(name = "VLDO_IPE")
+    private BigDecimal valorDescontoOferta;
+    
+    @Column(name ="DSAC_IPE")
+    private BigDecimal valorDescontoAcrescimo;   
+    
 
     @Column(name = "DTPR_IPE")
     @Temporal(TemporalType.DATE)
@@ -71,6 +78,8 @@ public class ItemPedido implements Serializable {
 
     @Column(name = "CODI_DPT")
     private Integer deposito;
+    
+   
 
     @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -95,6 +104,9 @@ public class ItemPedido implements Serializable {
     @JoinColumn(name = "CODI_CUL", referencedColumnName = "CODI_CUL")
     @ManyToOne(fetch = FetchType.LAZY)
     private Cultura cultura;
+    
+    
+    
 
     public Integer getDeposito() {
         return deposito;
@@ -233,6 +245,26 @@ public class ItemPedido implements Serializable {
         this.previsaoEntrega = previsaoEntrega;
     }
 
+    public BigDecimal getValorDescontoOferta() {
+        return valorDescontoOferta;
+    }
+
+    public void setValorDescontoOferta(BigDecimal valorDescontoOferta) {
+        this.valorDescontoOferta = valorDescontoOferta;
+    }
+
+    public BigDecimal getValorDescontoAcrescimo() {
+        return valorDescontoAcrescimo;
+    }
+
+    public void setValorDescontoAcrescimo(BigDecimal valorDescontoAcrescimo) {
+        this.valorDescontoAcrescimo = valorDescontoAcrescimo;
+    } 
+    
+    
+
+    
+
     @Transient
     public BigDecimal getValorTotal() {
         return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
@@ -257,13 +289,8 @@ public class ItemPedido implements Serializable {
       @Transient
     public BigDecimal getValorTotalCustoTabelaItem() {
         return this.getValorCustoTabela().multiply(new BigDecimal(this.getQuantidade()));
-    }
+    } 
     
-    
-    
-    
-    
-
     @Transient
     public BigDecimal getMargemItem() {
         BigDecimal resultado = valorUnitario.subtract(valorCustoTabela);

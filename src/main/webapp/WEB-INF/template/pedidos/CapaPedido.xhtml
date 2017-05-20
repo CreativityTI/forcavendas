@@ -59,7 +59,9 @@
 
 
         <p:outputLabel value="Total dos Produtos" style="font-weight: bold"/>
-        <h:outputText value="R$ 0,00" style="font-weight: bold" id="subtotal" />
+        <h:outputText id="subtotal" value="#{cadastroPedidoBean.pedido.valorTotalProdutos}" style="font-weight: bold; font-size: 1.1em">
+            <f:convertNumber type="currency"/>
+        </h:outputText>
 
         <p:outputLabel value="Ciclo" for="ciclo"/>
         <p:selectOneMenu id="ciclo" value="#{cadastroPedidoBean.pedido.ciclo}">

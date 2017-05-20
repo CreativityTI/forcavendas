@@ -6,12 +6,14 @@
 package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -32,6 +34,14 @@ public class Cabtab implements Serializable {
 
     @Column(name = "SITU_CTA")
     private Character situacao;
+
+    @Column(name = "DTBA_CTA")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date vencimento;
+    
+        
+    @Column(name = "FAPV_CTA")
+    private Double jurosAposVencimento;
 
     public Integer getCabTab() {
         return cabTab;
@@ -55,6 +65,22 @@ public class Cabtab implements Serializable {
 
     public void setSituacao(Character situacao) {
         this.situacao = situacao;
+    }
+
+    public Date getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(Date vencimento) {
+        this.vencimento = vencimento;
+    }
+
+    public Double getJurosAposVencimento() {
+        return jurosAposVencimento;
+    }
+
+    public void setJurosAposVencimento(Double jurosAposVencimento) {
+        this.jurosAposVencimento = jurosAposVencimento;
     }
     
     

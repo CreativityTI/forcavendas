@@ -7,6 +7,7 @@ package com.pontorural.pedidovenda.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "TABELA")
@@ -24,10 +26,10 @@ public class Tabela implements Serializable {
 
     @Id
     @Column(name = "TABE_CTA")
-    private Integer tabela;   
-    
-    
-    
+    private Integer tabela;
+
+ 
+
     @JoinColumn(name = "TABE_CTA", referencedColumnName = "TABE_CTA", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cabtab cabtab;
@@ -49,8 +51,6 @@ public class Tabela implements Serializable {
     public void setCabtab(Cabtab cabtab) {
         this.cabtab = cabtab;
     }
-
-  
 
     public Produto getProduto() {
         return produto;
@@ -84,6 +84,9 @@ public class Tabela implements Serializable {
         this.tabela = tabela;
     }
 
+
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -108,6 +111,5 @@ public class Tabela implements Serializable {
         }
         return true;
     }
-    
-    
+
 }
