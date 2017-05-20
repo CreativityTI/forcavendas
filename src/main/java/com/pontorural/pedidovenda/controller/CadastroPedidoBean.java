@@ -8,6 +8,7 @@ package com.pontorural.pedidovenda.controller;
 import com.pontorural.pedidovenda.model.Cfop;
 import com.pontorural.pedidovenda.model.Ciclo;
 import com.pontorural.pedidovenda.model.Condicao;
+import com.pontorural.pedidovenda.model.Cultura;
 import com.pontorural.pedidovenda.model.Empresa;
 import com.pontorural.pedidovenda.model.ItemPedido;
 import com.pontorural.pedidovenda.model.Operacao;
@@ -20,6 +21,7 @@ import com.pontorural.pedidovenda.model.Tabela;
 import com.pontorural.pedidovenda.repository.Cfops;
 import com.pontorural.pedidovenda.repository.Ciclos;
 import com.pontorural.pedidovenda.repository.Condicoes;
+import com.pontorural.pedidovenda.repository.Culturas;
 import com.pontorural.pedidovenda.repository.Empresas;
 import com.pontorural.pedidovenda.repository.Operacoes;
 import com.pontorural.pedidovenda.repository.Parceiros;
@@ -85,6 +87,9 @@ public class CadastroPedidoBean implements Serializable {
     @Inject
     private Tabelas repositoryTabelas;
 
+    @Inject
+    private Culturas repositoryCulturas;
+
     private List<Operacao> operacoes;
     private List<Cfop> cfops;
     private List<Ciclo> ciclos;
@@ -94,6 +99,8 @@ public class CadastroPedidoBean implements Serializable {
     private List<Pessoal> pessoas;
     private List<Empresa> empresas;
     private List<Tabela> tabelas;
+    private List<Cultura> culturas;
+    
 
     @Inject
     private CadastroPedidoService cadastroPedidoService;
@@ -141,6 +148,7 @@ public class CadastroPedidoBean implements Serializable {
                 item.setProduto(this.produtoLinhaEditavel);
                 item.setValorUnitario(this.produtoLinhaEditavel.getValor());
                 this.tabelas = this.repositoryTabelas.porProduto(this.produtoLinhaEditavel);
+                this.culturas = this.repositoryCulturas.todasCulturas();
                 this.pedido.adicionarItemVazio();
                 this.produtoLinhaEditavel = null;
                 this.codigo = null;
@@ -162,8 +170,8 @@ public class CadastroPedidoBean implements Serializable {
 
         return existeItem;
     }
-    
-        public void atualizarValorUnitario(ItemPedido item, int linha) {
+
+    public void atualizarValorUnitario(ItemPedido item, int linha) {
         if (item.getValorUnitario().compareTo(BigDecimal.ONE) < 1) {
             if (linha == 0) {
                 item.setValorUnitario(BigDecimal.ONE);
@@ -174,9 +182,6 @@ public class CadastroPedidoBean implements Serializable {
 
         this.pedido.recalcularValorTotal();
     }
-    
-    
-    
 
     public void atualizarQuantidade(ItemPedido item, int linha) {
         if (item.getQuantidade() < 1) {
@@ -188,6 +193,7 @@ public class CadastroPedidoBean implements Serializable {
         }
 
         this.pedido.recalcularValorTotal();
+        
     }
 
     public List<Parceiro> completarCliente(String nome) {
@@ -335,6 +341,16 @@ public class CadastroPedidoBean implements Serializable {
     public List<Tabela> getTabelas() {
         return tabelas;
     }
+
+    public List<Cultura> getCulturas() {
+        return culturas;
+    }
+
+    public void setCulturas(List<Cultura> culturas) {
+        this.culturas = culturas;
+    }
+    
+    
 
     public void setTabelas(List<Tabela> tabelas) {
         this.tabelas = tabelas;

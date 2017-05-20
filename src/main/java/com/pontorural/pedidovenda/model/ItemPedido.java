@@ -55,6 +55,9 @@ public class ItemPedido implements Serializable {
 
     @Column(name = "CGFI_IPE")
     private BigDecimal valorCutoGerFinanceiro;
+    
+    @Column(name = "CODI_DPT")
+    private Integer deposito;
 
     @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -76,6 +79,20 @@ public class ItemPedido implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Tabela tabela;
 
+    @JoinColumn(name = "CODI_CUL", referencedColumnName = "CODI_CUL")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cultura cultura;
+
+    public Integer getDeposito() {
+        return deposito;
+    }
+
+    public void setDeposito(Integer deposito) {
+        this.deposito = deposito;
+    }
+    
+    
+    
     public Date getEmissao() {
         return emissao;
     }
@@ -164,6 +181,17 @@ public class ItemPedido implements Serializable {
     public void setTabela(Tabela tabela) {
         this.tabela = tabela;
     }
+
+    public Cultura getCultura() {
+        return cultura;
+    }
+
+    public void setCultura(Cultura cultura) {
+        this.cultura = cultura;
+    }
+    
+    
+    
 
     @Transient
     public BigDecimal getValorTotal() {

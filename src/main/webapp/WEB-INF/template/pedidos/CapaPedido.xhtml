@@ -40,14 +40,10 @@
 
         </p:autoComplete>
 
-       <p:outputLabel value="Valor de desconto" for="valorDesconto"/>
-        <p:inputText id="valorDesconto" size="10" maxlength="10" styleClass="moeda" 
-                     value="#{cadastroPedidoBean.pedido.valorTotalDesconto}">
-        	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-        	
-        	<p:ajax event="blur" process="@this" update="totalPedido"
-        		listener="#{cadastroPedidoBean.recalcularPedido}" />
-        </p:inputText>
+
+        <p:outputLabel value="Teste2" for="teste6"/>
+        <h:outputText id="teste6" value="####" />
+
 
         <p:outputLabel value="CFOP" for="cfop"/>
         <p:selectOneMenu id="cfop" value="#{cadastroPedidoBean.pedido.cfop}" class="js-cfop">

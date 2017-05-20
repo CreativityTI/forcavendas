@@ -295,6 +295,7 @@ public class Pedido implements Serializable {
                 item.setCfop(cfop);
                 item.setSerie(serie);
                 item.setPedido(this);
+                item.setDeposito(1);
                 total = total.add(item.getValorTotal());
             }
 
