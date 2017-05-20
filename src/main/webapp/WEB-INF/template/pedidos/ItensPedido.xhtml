@@ -29,6 +29,7 @@
                             minQueryLength="3"
                             maxResults="5"    >
                 <p:ajax event="itemSelect" update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal" 
+                        
                         listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>
             </p:autoComplete>
         </p:column>
@@ -37,7 +38,6 @@
                 <p:selectOneMenu id="cultura" value="#{item.cultura}">
                 <f:selectItem itemLabel="Selecione" />
                 <f:selectItems value="#{cadastroPedidoBean.culturas}" itemLabel="#{cultura.nome}" var="cultura" 
-                               itemValue="#{cultura}"
                                />
 
             </p:selectOneMenu>
