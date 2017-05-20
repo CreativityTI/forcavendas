@@ -296,6 +296,7 @@ public class Pedido implements Serializable {
                 item.setSerie(serie);
                 item.setPedido(this);
                 item.setDeposito(1);
+                item.setPrevisaoEntrega(emissao);
                 total = total.add(item.getValorTotal());
             }
 

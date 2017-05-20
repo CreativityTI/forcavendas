@@ -55,7 +55,20 @@ public class ItemPedido implements Serializable {
 
     @Column(name = "CGFI_IPE")
     private BigDecimal valorCutoGerFinanceiro;
-    
+
+    @Column(name = "CCPD_IPE")
+    private BigDecimal valorCustoCompra;
+
+    @Column(name = "CTAB_IPE")
+    private BigDecimal valorCustoTabela;
+
+    @Column(name = "PVTB_IPE")
+    private BigDecimal valorPrecoTabFinanVencimento;
+
+    @Column(name = "DTPR_IPE")
+    @Temporal(TemporalType.DATE)
+    private Date previsaoEntrega;
+
     @Column(name = "CODI_DPT")
     private Integer deposito;
 
@@ -90,9 +103,7 @@ public class ItemPedido implements Serializable {
     public void setDeposito(Integer deposito) {
         this.deposito = deposito;
     }
-    
-    
-    
+
     public Date getEmissao() {
         return emissao;
     }
@@ -189,9 +200,38 @@ public class ItemPedido implements Serializable {
     public void setCultura(Cultura cultura) {
         this.cultura = cultura;
     }
-    
-    
-    
+
+    public BigDecimal getValorCustoCompra() {
+        return valorCustoCompra;
+    }
+
+    public void setValorCustoCompra(BigDecimal valorCustoCompra) {
+        this.valorCustoCompra = valorCustoCompra;
+    }
+
+    public BigDecimal getValorCustoTabela() {
+        return valorCustoTabela;
+    }
+
+    public void setValorCustoTabela(BigDecimal valorCustoTabela) {
+        this.valorCustoTabela = valorCustoTabela;
+    }
+
+    public BigDecimal getValorPrecoTabFinanVencimento() {
+        return valorPrecoTabFinanVencimento;
+    }
+
+    public void setValorPrecoTabFinanVencimento(BigDecimal valorPrecoTabFinanVencimento) {
+        this.valorPrecoTabFinanVencimento = valorPrecoTabFinanVencimento;
+    }
+
+    public Date getPrevisaoEntrega() {
+        return previsaoEntrega;
+    }
+
+    public void setPrevisaoEntrega(Date previsaoEntrega) {
+        this.previsaoEntrega = previsaoEntrega;
+    }
 
     @Transient
     public BigDecimal getValorTotal() {
@@ -205,13 +245,28 @@ public class ItemPedido implements Serializable {
     }
 
     @Transient
-    public BigDecimal getValorTotalCustoItem() {
+    public BigDecimal getValorTotalCustoGerencialFinanceiroItem() {
         return this.getValorCutoGerFinanceiro().multiply(new BigDecimal(this.getQuantidade()));
     }
 
     @Transient
+    public BigDecimal getValorTotalCustoCompraItem() {
+        return this.getValorCustoCompra().multiply(new BigDecimal(this.getQuantidade()));
+    }
+    
+      @Transient
+    public BigDecimal getValorTotalCustoTabelaItem() {
+        return this.getValorCustoTabela().multiply(new BigDecimal(this.getQuantidade()));
+    }
+    
+    
+    
+    
+    
+
+    @Transient
     public BigDecimal getMargemItem() {
-        BigDecimal resultado = valorUnitario.subtract(valorCutoGerFinanceiro);
+        BigDecimal resultado = valorUnitario.subtract(valorCustoTabela);
         return resultado.divide(valorUnitario, 0).multiply(new BigDecimal(100));
 
     }
