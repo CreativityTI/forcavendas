@@ -100,7 +100,6 @@ public class CadastroPedidoBean implements Serializable {
     private List<Empresa> empresas;
     private List<Tabela> tabelas;
     private List<Cultura> culturas;
-    
 
     @Inject
     private CadastroPedidoService cadastroPedidoService;
@@ -193,7 +192,7 @@ public class CadastroPedidoBean implements Serializable {
         }
 
         this.pedido.recalcularValorTotal();
-        
+
     }
 
     public List<Parceiro> completarCliente(String nome) {
@@ -349,8 +348,6 @@ public class CadastroPedidoBean implements Serializable {
     public void setCulturas(List<Cultura> culturas) {
         this.culturas = culturas;
     }
-    
-    
 
     public void setTabelas(List<Tabela> tabelas) {
         this.tabelas = tabelas;

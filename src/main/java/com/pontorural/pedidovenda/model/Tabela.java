@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "TABELA")
@@ -28,14 +27,12 @@ public class Tabela implements Serializable {
     @Column(name = "TABE_CTA")
     private Integer tabela;
 
- 
-
     @JoinColumn(name = "TABE_CTA", referencedColumnName = "TABE_CTA", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cabtab cabtab;
 
-    @JoinColumn(name = "CODI_PSV", referencedColumnName = "CODI_PSV")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CODI_PSV", referencedColumnName = "CODI_PSV", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produto produto;
 
     @Column(name = "BASI_TAB")
@@ -83,9 +80,6 @@ public class Tabela implements Serializable {
     public void setTabela(Integer tabela) {
         this.tabela = tabela;
     }
-
-
-    
 
     @Override
     public int hashCode() {

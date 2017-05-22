@@ -42,8 +42,20 @@ public class Tabelas implements Serializable {
         } catch (NoResultException e) {
             return null;
         }
-        
-       
+
+    }
+
+    public Tabela precoTabela(Produto produto, Tabela tabela) {
+        try {
+            return manager.createQuery("from Tabela t where t.produto = :produto and t.situacao = 'A'"
+                    + "and t.cabtab.situacao = 'A'", Tabela.class)
+                    .setParameter("produto", produto)
+                    .setParameter("tabela", tabela)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
     }
 
 }

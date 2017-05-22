@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -63,14 +62,16 @@ public class ItemPedido implements Serializable {
     private BigDecimal valorCustoTabela;
 
     @Column(name = "PVTB_IPE")
-    private BigDecimal valorPrecoTabFinanVencimento;
-    
+    private BigDecimal valorPrecoTabFinanVencimento = BigDecimal.ZERO;
+
     @Column(name = "VLDO_IPE")
-    private BigDecimal valorDescontoOferta;
+    private BigDecimal valorDescontoOferta = BigDecimal.ZERO;
+
+    @Column(name = "DSAC_IPE")
+    private BigDecimal valorDescontoAcrescimo = BigDecimal.ZERO;
     
-    @Column(name ="DSAC_IPE")
-    private BigDecimal valorDescontoAcrescimo;   
-    
+     @Column(name = "VLRO_IPE")
+    private BigDecimal valorOMSemDescontoAcrescimo = BigDecimal.ZERO;
 
     @Column(name = "DTPR_IPE")
     @Temporal(TemporalType.DATE)
@@ -78,8 +79,6 @@ public class ItemPedido implements Serializable {
 
     @Column(name = "CODI_DPT")
     private Integer deposito;
-    
-   
 
     @JoinColumn(name = "PEDI_PED", referencedColumnName = "PEDI_PED")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -104,9 +103,6 @@ public class ItemPedido implements Serializable {
     @JoinColumn(name = "CODI_CUL", referencedColumnName = "CODI_CUL")
     @ManyToOne(fetch = FetchType.LAZY)
     private Cultura cultura;
-    
-    
-    
 
     public Integer getDeposito() {
         return deposito;
@@ -141,7 +137,7 @@ public class ItemPedido implements Serializable {
     }
 
     public BigDecimal getValorUnitario() {
-        return valorUnitario;
+            return valorUnitario;
     }
 
     public void setValorUnitario(BigDecimal valorUnitario) {
@@ -259,10 +255,16 @@ public class ItemPedido implements Serializable {
 
     public void setValorDescontoAcrescimo(BigDecimal valorDescontoAcrescimo) {
         this.valorDescontoAcrescimo = valorDescontoAcrescimo;
-    } 
-    
-    
+    }
 
+    public BigDecimal getValorOMSemDescontoAcrescimo() {
+        return valorOMSemDescontoAcrescimo;
+    }
+
+    public void setValorOMSemDescontoAcrescimo(BigDecimal valorOMSemDescontoAcrescimo) {
+        this.valorOMSemDescontoAcrescimo = valorOMSemDescontoAcrescimo;
+    }
+    
     
 
     @Transient
@@ -285,12 +287,12 @@ public class ItemPedido implements Serializable {
     public BigDecimal getValorTotalCustoCompraItem() {
         return this.getValorCustoCompra().multiply(new BigDecimal(this.getQuantidade()));
     }
-    
-      @Transient
+
+    @Transient
     public BigDecimal getValorTotalCustoTabelaItem() {
         return this.getValorCustoTabela().multiply(new BigDecimal(this.getQuantidade()));
-    } 
-    
+    }
+
     @Transient
     public BigDecimal getMargemItem() {
         BigDecimal resultado = valorUnitario.subtract(valorCustoTabela);
